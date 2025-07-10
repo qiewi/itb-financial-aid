@@ -12,15 +12,15 @@
                 :alt="footerData?.data?.siteName"
                 width="32"
               /> -->
-              {{ footerData?.data?.siteName }}
+              {{ safeFooterData.siteName }}
             </NuxtLink>
-            <p>{{ footerData.data.siteDescription }}</p>
+            <p>{{ safeFooterData.siteDescription }}</p>
           </div>
           <!-- Footer Info -->
           <nav class="footer-nav mb-4">
             <h6 class="mb-2 font-semibold">Information</h6>
             <ul>
-              <li v-for="(link, i) in footerMenus.data" :key="i">
+              <li v-for="(link, i) in safeFooterMenus" :key="i">
                 <NuxtLink :to="link.Url">{{ link.Title }}</NuxtLink>
               </li>
             </ul>
@@ -30,7 +30,7 @@
             <h6 class="mb-2 font-semibold">Social Media</h6>
             <ul class="flex">
               <li
-                v-for="(item, i) in footerData.data.SocialMedia"
+                v-for="(item, i) in safeFooterData.SocialMedia"
                 :key="i + item.id"
               >
                 <a
@@ -57,7 +57,7 @@
     <div
       class="footer-bottom bg-primary-600 p-2 text-center text-xs text-white"
     >
-      <p>&copy; {{ footerData.data.Copyrights }}</p>
+      <p>&copy; {{ safeFooterData.Copyrights }}</p>
     </div>
   </footer>
 </template>
@@ -65,6 +65,55 @@
 <script setup>
 const { data: footerData } = useNuxtData('global')
 const { data: footerMenus } = useNuxtData('footer-menus')
+
+const safeFooterData = computed(() => ({
+  siteName: footerData.value?.data?.siteName || 'ITB Financial Aid',
+  siteDescription:
+    footerData.value?.data?.siteDescription ||
+    'Institut Teknologi Bandung Financial Aid and Scholarship Information System',
+  Copyrights:
+    footerData.value?.data?.Copyrights ||
+    '2024 Institut Teknologi Bandung. All rights reserved.',
+  SocialMedia: footerData.value?.data?.SocialMedia || [
+    {
+      id: 1,
+      Name: 'Facebook',
+      Url: 'https://facebook.com/itb.ac.id',
+    },
+    {
+      id: 2,
+      Name: 'Twitter',
+      Url: 'https://twitter.com/itbofficial',
+    },
+    {
+      id: 3,
+      Name: 'Instagram',
+      Url: 'https://instagram.com/itbofficial',
+    },
+  ],
+}))
+
+const safeFooterMenus = computed(
+  () =>
+    footerMenus.value?.data || [
+      {
+        Title: 'About ITB',
+        Url: '/about',
+      },
+      {
+        Title: 'Privacy Policy',
+        Url: '/privacy',
+      },
+      {
+        Title: 'Terms of Service',
+        Url: '/terms',
+      },
+      {
+        Title: 'Help Center',
+        Url: '/help',
+      },
+    ],
+)
 
 if (footerData.value?.error !== undefined) {
   const err = footerData.value.error

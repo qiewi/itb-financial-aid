@@ -39,10 +39,14 @@ function findPageByUrl(pages) {
 // onMounted(async () => {
 // const { data: menus } = useNuxtData('main-menus')
 const { data: pages } = useNuxtData('pages')
+
+// Safe data access with fallback
+const safePages = computed(() => pages.value?.data || [])
+
 // cachedMenus.value = menus
 // Simulate API fetch based on URL
 // const menus = await fetchMenus()
-const page = await findPageByUrl(pages.value.data)
+const page = findPageByUrl(safePages.value)
 
 if (page) {
   pageData.value = page

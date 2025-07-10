@@ -19,6 +19,11 @@
 
 const { data: mainMenus } = useNuxtData('main-menus')
 
+// Computed property to safely access menu data with fallback
+const safeMenuData = computed(() => {
+  return mainMenus.value?.data || []
+})
+
 // function prependUrls(menuItems, basePath = '') {
 //   return menuItems.map(item => {
 //     // Build the full path
@@ -52,9 +57,12 @@ const style = {
 }
 
 onMounted(() => {
-  mainMenus.value.data.forEach(() => {
-    showSubNav.value.push(false)
-  })
+  // Add null checks to prevent errors during SSR or when data is not yet loaded
+  if (safeMenuData.value.length) {
+    safeMenuData.value.forEach(() => {
+      showSubNav.value.push(false)
+    })
+  }
 
   window.onresize = () => {
     showNav.value = false
@@ -84,7 +92,7 @@ onMounted(() => {
     >
       <NuxtIcon :name="!showNav ? 'bars' : 'close'" />
     </button>
-    <span v-if="!mainMenus.data.length">Kosong</span>
+    <span v-if="!safeMenuData.length">Kosong</span>
     <ul
       v-else
       class="fixed top-[64px] right-0 z-[3] mb-0 block w-80 bg-white transition-transform lg:static lg:flex lg:h-auto lg:w-auto lg:translate-x-0"
@@ -98,7 +106,7 @@ onMounted(() => {
         </span>
       </li>
       <li
-        v-for="(nav, i) in mainMenus.data"
+        v-for="(nav, i) in safeMenuData"
         :key="i"
         class="main-nav__item group relative"
       >
