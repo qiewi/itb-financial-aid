@@ -1,12 +1,25 @@
 <template>
   <main id="main" role="main" class="app-main">
-    <!-- <HeroV2 :items="hero" /> -->
+    <div class="flex h-full flex-col items-center justify-center">
+      <div class="text-center">
+        <h1 class="mb-4 text-2xl font-semibold">Redirecting to Home...</h1>
+        <p class="text-gray-600">
+          Please wait while we redirect you to the home page.
+        </p>
+      </div>
+    </div>
 
-    <PagesDynamic slugs="home" />
+    <!-- PRESERVED: PagesDynamic component for future use -->
+    <!-- <PagesDynamic slugs="home" /> -->
   </main>
 </template>
 
 <script setup>
+// Automatically redirect to /home when accessing the root route
+await navigateTo('/home', { replace: true })
+
+// DISABLED: All original index page functionality - preserved for future restoration
+/*
 import { useThemeStore } from '~/store/global'
 const theme = useThemeStore()
 const seo = {
@@ -33,9 +46,7 @@ theme.darkTheme = useCookie('theme', {
   expires,
 })
 
-/*
-JSONLD
-*/
+// JSONLD
 const breadcrumbs = ref([])
 
 breadcrumbs.value = [
@@ -89,22 +100,6 @@ useJsonld({
 // Handle Lazy component scroll behaviour
 const showAllComponents = ref(false)
 onMounted(() => {
-  // document.addEventListener('scroll', () => {
-  //   showAllComponents.value = true
-  // })
-
-  // document.addEventListener('click', () => {
-  //   showAllComponents.value = true
-  // })
-
-  // document.addEventListener('mousemove', () => {
-  //   showAllComponents.value = true
-  // })
-
-  // document.addEventListener('touchmove', () => {
-  //   showAllComponents.value = true
-  // })
-
   const enableComponents = () => {
     showAllComponents.value = true
   }
@@ -115,4 +110,5 @@ onMounted(() => {
     document.addEventListener(event, enableComponents)
   })
 })
+*/
 </script>
