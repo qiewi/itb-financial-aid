@@ -4,6 +4,18 @@
       <div
         class="mx-auto w-full max-w-sm rounded-lg bg-white px-8 py-6 shadow-lg"
       >
+        <div class="text-center">
+          <h1 class="mb-4 text-2xl font-semibold">Redirecting...</h1>
+          <p class="mb-4 text-gray-600">
+            Authentication is temporarily disabled.
+          </p>
+          <p class="text-sm text-gray-500">
+            You will be redirected to the home page now.
+          </p>
+        </div>
+
+        <!-- DISABLED: Login form - authentication bypassed for development -->
+        <!-- 
         <h1 class="mb-4 text-center text-2xl font-semibold">Login Page</h1>
         <UForm :schema="schema" :state="state" @submit.prevent="signMeIn">
           <UFormField
@@ -44,24 +56,47 @@
             size="lg"
           />
         </UForm>
+        -->
       </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import * as z from 'zod'
-import type { FormSubmitEvent } from '@nuxt/ui'
+// DISABLED: Authentication logic - bypassed for development
+// import * as z from 'zod'
+// import type { FormSubmitEvent } from '@nuxt/ui'
 
-const { signIn, status } = useAuth()
+// const { signIn, status } = useAuth()
 const route = useRoute()
-const toast = useToast()
+// const toast = useToast()
 
+// Bypass authentication and redirect to home or specified redirect URL
+const redirectTo = computed(() => {
+  const redirect = route.query.redirect
+  // Handle TypeScript type safety for redirect parameter
+  if (Array.isArray(redirect)) {
+    return redirect[0] || '/home'
+  }
+  return redirect || '/home'
+})
+
+// Auto-redirect immediately to bypass login
+onMounted(() => {
+  // Immediate redirect to /home 
+  console.log('Login page: redirecting to', redirectTo.value)
+  navigateTo(redirectTo.value, { replace: true })
+})
+
+// REMOVED: Duplicate redirect that was causing the loop
+// navigateTo(redirectTo.value, { replace: true })
+
+// DISABLED: All authentication-related code below
+/* 
 // const identifier = ref('chandra')
 // const password = ref('@Pass123word')
 const isLoading = ref(false)
 const authenticated = computed(() => status.value === 'authenticated')
-const redirectTo = computed(() => route.query.redirect || '/')
 
 const schema = z.object({
   identifier: z.string().min(4, 'Must be at least 8 characters'),
@@ -95,7 +130,7 @@ async function signMeIn(event: FormSubmitEvent<Schema>) {
       icon: 'i-lucide-alert-triangle',
       color: 'success',
     })
-    navigateTo(redirectTo.value, { external: true })
+    navigateTo(redirectTo.value)
     isLoading.value = false
   } else {
     isLoading.value = false
@@ -110,13 +145,15 @@ async function signMeIn(event: FormSubmitEvent<Schema>) {
 }
 
 if (authenticated.value) {
-  navigateTo(redirectTo.value, { external: true })
+  navigateTo(redirectTo.value)
 }
+*/
 
-definePageMeta({
-  auth: {
-    unauthenticatedOnly: true,
-    // navigateAuthenticatedTo: redirectTo,
-  },
-})
+// DISABLED: Authentication-only page meta - allowing all users for now
+// definePageMeta({
+//   auth: {
+//     unauthenticatedOnly: true,
+//     // navigateAuthenticatedTo: redirectTo,
+//   },
+// })
 </script>

@@ -133,7 +133,7 @@ export default defineNuxtConfig({
       // },
     },
     globalAppMiddleware: {
-      isEnabled: true,
+      isEnabled: false, // DISABLED: Bypass authentication globally to prevent redirect loops
     },
   },
 
