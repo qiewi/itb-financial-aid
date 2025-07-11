@@ -1,9 +1,9 @@
 <template>
     <div
-      class="h-[267px] w-[284px] overflow-hidden rounded-[25px] bg-[linear-gradient(139deg,rgba(255,255,255,1)_0%,rgba(224,235,243,1)_100%)]"
+      class="max-w[260px] overflow-hidden rounded-[25px] bg-[linear-gradient(139deg,rgba(255,255,255,1)_0%,rgba(224,235,243,1)_100%)]"
     >
       <div class="relative h-full p-0">
-        <div class="relative h-full w-full">
+        <div class="flex flex-col h-full w-full items-center">
           <!-- Background image -->
           <div
             class="absolute top-0 left-0 h-full w-full rounded-3xl bg-cover bg-center"
@@ -12,7 +12,7 @@
   
           <!-- Type badge -->
           <div class="absolute top-[17px] left-0">
-            <div class="absolute top-[5px] left-[21px] h-[37px] w-[91px]">
+            <div class="absolute top-[5px] h-[37px] w-[91px]">
               <div
                 :class="`relative inline-flex flex-col items-start gap-2.5 py-2.5 pr-4 pl-2.5 ${program.typeClass} rounded-[0px_25px_25px_0px]`"
               >
@@ -29,7 +29,7 @@
   
           <!-- Content -->
           <div
-            class="absolute top-[71px] left-[39px] flex w-[248px] flex-col items-start gap-4"
+            class="flex max-w-[248px] flex-col gap-4 p-6 pt-16 items-center"
           >
             <div
               class="relative flex w-full flex-col items-start gap-2 self-stretch"
