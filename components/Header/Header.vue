@@ -11,7 +11,7 @@
           class="flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-full border-2 border-[var(--button-color)] bg-white"
         >
           <img
-            src="/assets/img/itb-logo.jpg"
+            src="/assets/img/logo-itb.png"
             alt="ITB Logo"
             class="h-[46px] w-[46px] object-contain"
           />
