@@ -173,6 +173,30 @@ img {
   color: color-mix(in srgb, var(--button-color) 100%, #000 15%);
 }
 
+/* Scholarship Card Badge Classes */
+.badge-eksternal {
+  background-color: rgba(173, 216, 230, 0.8);
+  color: #1e40af;
+}
+
+.badge-internal {
+  background-color: rgba(255, 237, 213, 0.8);
+  color: #ea580c;
+}
+
+/* Custom shade colors for scholarship cards */
+.bg-shades-blue20 {
+  background-color: rgba(173, 216, 230, 0.8);
+}
+
+.text-shades-blue70 {
+  color: #1e40af;
+}
+
+.bg-shades-yellow40 {
+  background-color: rgba(255, 237, 213, 0.8);
+}
+
 /* import modules/header.css */
 /* @import './modules/header.css'; */
 
