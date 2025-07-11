@@ -3,7 +3,7 @@
     class="relative aspect-[284/277] w-full overflow-hidden rounded-2xl"
     :style="{
       background: `linear-gradient(180deg, rgba(229,229,229,0) 60%, rgba(229,229,229,1) 89%, rgba(229,229,229,1) 100%), 
-                  url(${announcement.image}) / cover`,
+                  url(${announcement.image}) 50% 50% / cover`,
     }"
   >
     <!-- Content Card -->
