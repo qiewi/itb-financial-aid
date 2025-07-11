@@ -71,68 +71,7 @@
     </section>
 
     <!-- Scholarship Program Section -->
-    <section class="bg-white py-16">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <!-- Section Title -->
-        <div class="text-primary mb-12 text-center">
-          <h2 class="mb-4 text-3xl font-bold md:text-4xl lg:text-7xl">
-            <span class="text-primary">Kesempatan </span>
-            <span class="text-primary">Emas </span>
-            <span class="stroke-text">Menjadi </span>
-          </h2>
-          <h2 class="mb-4 text-3xl font-bold md:text-4xl lg:text-7xl">
-            <span class="stroke-text stroke-primary">Penerima </span>
-            <span class="text-primary">Beasiswa </span>
-          </h2>
-        </div>
-
-        <!-- Tabs -->
-        <div class="mb-12 flex justify-center">
-          <div class="flex rounded-full bg-gray-100 p-1">
-            <button
-              :class="[
-                'rounded-full px-8 py-3 font-semibold transition-all duration-300',
-                activeTab === 'sarjana'
-                  ? 'bg-[var(--button-color)] text-white'
-                  : 'text-gray-600 hover:text-[var(--button-color)]',
-              ]"
-              @click="activeTab = 'sarjana'"
-            >
-              Sarjana
-            </button>
-            <button
-              :class="[
-                'rounded-full px-8 py-3 font-semibold transition-all duration-300',
-                activeTab === 'pascasarjana'
-                  ? 'bg-[var(--button-color)] text-white'
-                  : 'text-gray-600 hover:text-[var(--button-color)]',
-              ]"
-              @click="activeTab = 'pascasarjana'"
-            >
-              Pascasarjana
-            </button>
-          </div>
-        </div>
-
-        <!-- Scholarship Cards -->
-        <div class="mb-8 flex flex-wrap justify-center gap-6">
-          <CardsProgram
-            v-for="(program, index) in currentPrograms"
-            :key="index"
-            :program="program"
-          />
-        </div>
-
-        <!-- View All Button -->
-        <div class="flex justify-center">
-          <button
-            class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg"
-          >
-            Lihat Semua Program
-          </button>
-        </div>
-      </div>
-    </section>
+    <TabsSwitch />
 
     <!-- Statistics Section -->
     <section class="relative w-full bg-white py-16">
@@ -385,69 +324,7 @@
     </section>
 
     <!-- Partners Section -->
-    <section class="w-full bg-white py-10">
-      <div class="container mx-auto px-4">
-        <div class="flex flex-col items-center gap-10">
-          <div class="flex flex-col items-center gap-8">
-            <h2 class="text-center text-4xl font-bold text-[#1a1a1a]">
-              Mitra Pemberi Beasiswa
-            </h2>
-
-            <div class="flex flex-col items-center gap-4">
-              <div class="relative w-full max-w-4xl overflow-hidden">
-                <div
-                  class="flex transition-transform duration-500 ease-in-out"
-                  :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-                >
-                  <div
-                    v-for="(slide, slideIndex) in partnerSlides"
-                    :key="slideIndex"
-                    class="w-full flex-shrink-0"
-                  >
-                    <div
-                      class="flex flex-wrap justify-center gap-[49.35px] px-4"
-                    >
-                      <div
-                        v-for="(partner, index) in slide"
-                        :key="index"
-                        class="flex h-[95px] w-[95px] items-center justify-center"
-                      >
-                        <img
-                          class="max-h-[69px] max-w-[91px] object-contain transition-opacity duration-300 hover:opacity-75"
-                          :alt="partner.alt"
-                          :src="partner.logo"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Progress Dots -->
-              <div class="flex items-center gap-3">
-                <div
-                  v-for="(slide, index) in partnerSlides"
-                  :key="index"
-                  :class="[
-                    'cursor-pointer rounded-lg transition-all duration-300',
-                    index === currentSlide
-                      ? 'btn-button-color h-4 w-4'
-                      : 'h-3 w-3 bg-[#d9d9d9] hover:bg-gray-400',
-                  ]"
-                  @click="goToSlide(index)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <button
-            class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg"
-          >
-            Lihat Selengkapnya
-          </button>
-        </div>
-      </div>
-    </section>
+    <CarouselCarousel />
 
     <!-- FAQ Section -->
     <section class="w-full bg-white py-12">
@@ -471,65 +348,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import CardsScholarship from '~/components/Cards/Scholarship.vue'
-import CardsAnnouncement from '~/components/Cards/Announcement.vue'
-import CardsSliding from '~/components/Cards/Sliding.vue'
-import AccordionFaq from '~/components/Accordion/Faq.vue'
-
 // Import data from separate files
-import { scholarshipPrograms } from '~/data/scholarshipPrograms.js'
 import { featuredScholarships } from '~/data/featuredScholarships.js'
 import { announcements } from '~/data/announcements.js'
-import { partners } from '~/data/partners.js'
 import { faqs } from '~/data/faqs.js'
-
-// Scholarship programs functionality
-const activeTab = ref('sarjana')
-
-const currentPrograms = computed(() => {
-  return scholarshipPrograms[activeTab.value] || []
-})
-
-// Partners carousel functionality
-const currentSlide = ref(0)
-const autoSlideInterval = ref(null)
-
-const partnerSlides = computed(() => {
-  const slideSize = 5
-  const slides = []
-  for (let i = 0; i < partners.length; i += slideSize) {
-    slides.push(partners.slice(i, i + slideSize))
-  }
-  return slides
-})
-
-const goToSlide = index => {
-  currentSlide.value = index
-  resetAutoSlide()
-}
-
-const startAutoSlide = () => {
-  autoSlideInterval.value = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % partnerSlides.value.length
-  }, 4000) // Change slide every 4 seconds
-}
-
-const resetAutoSlide = () => {
-  if (autoSlideInterval.value) {
-    clearInterval(autoSlideInterval.value)
-  }
-  startAutoSlide()
-}
-
-// Lifecycle hooks
-onMounted(() => {
-  startAutoSlide()
-})
-
-onUnmounted(() => {
-  if (autoSlideInterval.value) {
-    clearInterval(autoSlideInterval.value)
-  }
-})
 </script>
