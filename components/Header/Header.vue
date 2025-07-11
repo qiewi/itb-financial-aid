@@ -3,7 +3,7 @@
     class="sticky top-0 z-50 h-[70px] w-full border-b border-gray-200 bg-white shadow-sm"
   >
     <div
-      class="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-8"
+      class="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-8 py-4"
     >
       <!-- Logo and Institution Name -->
       <div class="flex items-center gap-3">
