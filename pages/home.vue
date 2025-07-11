@@ -2,9 +2,19 @@
   <main class="pt-[70px]">
     <!-- Hero Section -->
     <section
-      class="relative overflow-hidden bg-gradient-to-r from-blue-50 to-white"
+      class="relative overflow-hidden bg-gradient-to-l from-blue-50 to-white"
     >
-      <div class="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+      <!-- Campus Background - Full Section -->
+      <div class="absolute inset-0 z-0">
+        <img
+          src="/assets/img/campus.png"
+          alt="ITB Campus"
+          class="h-full w-full object-cover opacity-20"
+        />
+      </div>
+
+      <!-- Content Layer -->
+      <div class="relative z-10 mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <!-- Left Content -->
           <div class="max-w-xl space-y-8">
@@ -32,6 +42,7 @@
 
           <!-- Right Image -->
           <div class="relative">
+            <!-- Main Student Image -->
             <div class="relative z-10">
               <img
                 src="/assets/img/mahasiswa.png"
@@ -39,19 +50,20 @@
                 class="h-full w-full object-cover"
               />
             </div>
+
             <!-- Decorative elements -->
             <div
-              class="absolute -top-6 -right-6 h-24 w-24 rounded-full bg-[var(--button-color)] opacity-10"
+              class="absolute -top-6 -right-6 z-5 h-24 w-24 rounded-full bg-[var(--button-color)] opacity-10"
             ></div>
             <div
-              class="absolute -bottom-6 -left-6 h-32 w-32 rounded-full bg-blue-200 opacity-30"
+              class="absolute -bottom-6 -left-6 z-5 h-32 w-32 rounded-full bg-blue-200 opacity-30"
             ></div>
           </div>
         </div>
       </div>
 
       <!-- Background Pattern -->
-      <div class="absolute top-0 right-0 h-full w-1/3 opacity-5">
+      <div class="absolute top-0 right-0 z-5 h-full w-1/3 opacity-5">
         <div
           class="h-full w-full bg-gradient-to-l from-[var(--button-color)] to-transparent"
         ></div>
@@ -62,14 +74,15 @@
     <section class="bg-white py-16">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <!-- Section Title -->
-        <div class="mb-12 text-center">
-          <h2
-            class="mb-4 text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl"
-          >
-            Kesempatan
-            <span class="text-[var(--button-color)]">Emas</span> Menjadi
-            <br />
-            Penerima <span class="text-[var(--button-color)]">Beasiswa</span>
+        <div class="text-primary mb-12 text-center">
+          <h2 class="mb-4 text-3xl font-bold md:text-4xl lg:text-7xl">
+            <span class="text-primary">Kesempatan </span>
+            <span class="text-primary">Emas </span>
+            <span class="stroke-text">Menjadi </span>
+          </h2>
+          <h2 class="mb-4 text-3xl font-bold md:text-4xl lg:text-7xl">
+            <span class="stroke-text stroke-primary">Penerima </span>
+            <span class="text-primary">Beasiswa </span>
           </h2>
         </div>
 
@@ -144,21 +157,22 @@
         </p>
 
         <!-- Features -->
-        <div class="mb-16 flex flex-wrap justify-center gap-8">
-          <div class="flex w-[230px] items-center gap-4">
+        <div class="mb-16 flex flex-wrap justify-center gap-16">
+          <div class="flex items-center gap-4">
             <img
-              class="h-[72px] w-[67.15px]"
+              class="h-[52px]"
               alt="Dukungan finansial"
               src="/assets/img/money-icon.png"
             />
-            <div class="w-[145px] text-lg font-semibold text-[#1a1a1a]">
-              Dukungan Finansial
+            <div class="text-lg font-semibold text-[#1a1a1a]">
+              Dukungan <br />
+              Finansial
             </div>
           </div>
 
-          <div class="flex w-[230px] items-center gap-4">
+          <div class="flex items-center gap-4">
             <img
-              class="h-[72px] w-[67.15px]"
+              class="h-[52px]"
               alt="Softskill"
               src="/assets/img/softskill-icon.png"
             />
@@ -168,9 +182,9 @@
             </div>
           </div>
 
-          <div class="flex w-[230px] items-center gap-4">
+          <div class="flex items-center gap-4">
             <img
-              class="h-[72px] w-[67.15px]"
+              class="h-[52px]"
               alt="Jaringan Profesional"
               src="/assets/img/jaringan-icon.png"
             />
@@ -180,9 +194,9 @@
             </div>
           </div>
 
-          <div class="flex w-[230px] items-center gap-4">
+          <div class="flex items-center gap-4">
             <img
-              class="h-[72px] w-[67.15px]"
+              class="h-[52px]"
               alt="Prestasi"
               src="/assets/img/prestasi-icon.png"
             />
@@ -195,7 +209,7 @@
 
         <!-- Stats -->
         <div
-          class="border-primary mx-auto grid max-w-6xl grid-cols-1 rounded-lg border py-8 md:grid-cols-2 lg:grid-cols-3"
+          class="border-primary mx-auto grid max-w-6xl grid-cols-1 rounded-3xl border py-8 md:grid-cols-2 lg:grid-cols-3"
         >
           <!-- Statistic 1 -->
           <div
