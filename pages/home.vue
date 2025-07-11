@@ -356,7 +356,7 @@
             <div
               v-for="(story, index) in stories"
               :key="index"
-              class="absolute max-w-[300px] overflow-hidden rounded-2xl shadow-lg transition-all duration-500 ease-in-out ml-8"
+              class="absolute ml-8 max-w-[300px] overflow-hidden rounded-2xl shadow-lg transition-all duration-500 ease-in-out"
               :class="getCardClasses(index)"
               :style="getCardStyles(index)"
             >
@@ -385,13 +385,13 @@
 
             <div class="group flex cursor-pointer items-center gap-2">
               <span
-                class="text-base font-medium text-button-color group-hover:underline"
+                class="text-button-color text-base font-medium group-hover:underline"
               >
                 Lihat Detail
               </span>
               <UIcon
                 name="i-heroicons-arrow-right"
-                class="h-5 w-5 text-button-color transition-transform group-hover:translate-x-1"
+                class="text-button-color h-5 w-5 transition-transform group-hover:translate-x-1"
               />
             </div>
 
@@ -401,10 +401,9 @@
                 @click="previousStory"
                 class="rounded-full p-3 pb-2 shadow-lg transition-all"
                 :class="{
-                  'cursor-not-allowed opacity-50 bg-gray-400': 
-                  currentStoryIndex === 0, 
-                  'btn-button-color': 
-                  currentStoryIndex !== 0,
+                  'cursor-not-allowed bg-gray-400 opacity-50':
+                    currentStoryIndex === 0,
+                  'btn-button-color': currentStoryIndex !== 0,
                 }"
                 :disabled="currentStoryIndex === 0"
               >
@@ -418,10 +417,9 @@
                 @click="nextStory"
                 class="rounded-full p-3 pb-2 shadow-lg transition-all"
                 :class="{
-                  'cursor-not-allowed opacity-50 bg-gray-400':
+                  'cursor-not-allowed bg-gray-400 opacity-50':
                     currentStoryIndex === stories.length - 1,
-                  'btn-button-color':
-                    currentStoryIndex !== stories.length - 1,
+                  'btn-button-color': currentStoryIndex !== stories.length - 1,
                 }"
                 :disabled="currentStoryIndex === stories.length - 1"
               >
@@ -432,12 +430,41 @@
               </button>
 
               <button
-                class="ml-4 rounded-full btn-button-color px-6 py-3 font-semibold text-white transition-all hover:shadow-lg"
+                class="btn-button-color ml-4 rounded-full px-6 py-3 font-semibold text-white transition-all hover:shadow-lg"
               >
                 Lihat Selengkapnya
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section class="w-full bg-white py-14">
+      <div class="container mx-auto px-4">
+        <h2
+          class="mb-14 text-center text-3xl font-bold text-[#1a1a1a] lg:text-4xl"
+        >
+          Pengumuman
+        </h2>
+
+        <div class="flex flex-col items-center gap-10">
+          <div
+            class="grid w-full max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          >
+            <CardsAnnouncement
+              v-for="(announcement, index) in announcements"
+              :key="index"
+              :announcement="announcement"
+            />
+          </div>
+
+          <button
+            class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg"
+          >
+            Lihat Selengkapnya
+          </button>
         </div>
       </div>
     </section>
@@ -628,6 +655,30 @@ const featuredScholarships = [
     type: 'Eksternal',
     level: 'Sarjana',
     status: 'Segera Berakhir',
+  },
+]
+
+// Announcements data
+const announcements = [
+  {
+    title: 'Pembukaan Pendaftaran Beasiswa Unggulan ITB 2024',
+    date: '15 Maret 2024',
+    image: '/assets/img/announcement-1.jpg',
+  },
+  {
+    title: 'Workshop Persiapan Berkas Beasiswa untuk Mahasiswa Baru',
+    date: '22 Maret 2024',
+    image: '/assets/img/announcement-2.jpg',
+  },
+  {
+    title: 'Sosialisasi Program Bantuan Keuangan Mahasiswa',
+    date: '28 Maret 2024',
+    image: '/assets/img/announcement-3.png',
+  },
+  {
+    title: 'Pengumuman Hasil Seleksi Beasiswa KIP-Kuliah Gelombang 1',
+    date: '5 April 2024',
+    image: '/assets/img/announcement-4.jpg',
   },
 ]
 </script>
