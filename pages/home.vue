@@ -575,39 +575,21 @@ import CardsScholarship from '~/components/Cards/Scholarship.vue'
 import CardsAnnouncement from '~/components/Cards/Announcement.vue'
 import AccordionFaq from '~/components/Accordion/Faq.vue'
 
-// Sample testimonial data
-const stories = ref([
-  {
-    name: 'Risa Anjani',
-    program: 'Alumni FSRD ITB',
-    quote:
-      'Dengan bantuan beasiswa Gen 45 ini, saya lebih dekat dengan impian saya untuk melanjutkan pendidikan lebih lanjut.',
-    photo: '/assets/img/risa-testimonial.png',
-  },
-  {
-    name: 'Ahmad Fauzi',
-    program: 'Mahasiswa Teknik Informatika ITB',
-    quote:
-      'Beasiswa ini memberikan kesempatan emas untuk fokus pada studi tanpa khawatir biaya pendidikan.',
-    photo: '/assets/img/risa-testimonial.png',
-  },
-  {
-    name: 'Sari Dewi',
-    program: 'Alumni Teknik Kimia ITB',
-    quote:
-      'Dukungan finansial yang diberikan memungkinkan saya untuk mengejar penelitian impian di bidang teknologi hijau.',
-    photo: '/assets/img/risa-testimonial.png',
-  },
-])
+// Import data from separate files
+import { stories } from '~/data/testimonials.js'
+import { scholarshipPrograms } from '~/data/scholarshipPrograms.js'
+import { featuredScholarships } from '~/data/featuredScholarships.js'
+import { announcements } from '~/data/announcements.js'
+import { partners } from '~/data/partners.js'
+import { faqs } from '~/data/faqs.js'
 
+// Testimonial functionality
 const currentStoryIndex = ref(0)
-
-const currentStory = computed(() => stories.value[currentStoryIndex.value])
+const currentStory = computed(() => stories[currentStoryIndex.value])
 
 const getCardClasses = index => {
   const position =
-    (index - currentStoryIndex.value + stories.value.length) %
-    stories.value.length
+    (index - currentStoryIndex.value + stories.length) % stories.length
 
   if (position === 0) {
     return 'z-30 w-full h-full'
@@ -622,8 +604,7 @@ const getCardClasses = index => {
 
 const getCardStyles = index => {
   const position =
-    (index - currentStoryIndex.value + stories.value.length) %
-    stories.value.length
+    (index - currentStoryIndex.value + stories.length) % stories.length
 
   if (position === 0) {
     return {
@@ -653,7 +634,7 @@ const getCardStyles = index => {
 }
 
 const nextStory = () => {
-  if (currentStoryIndex.value < stories.value.length - 1) {
+  if (currentStoryIndex.value < stories.length - 1) {
     currentStoryIndex.value++
   }
 }
@@ -664,162 +645,17 @@ const previousStory = () => {
   }
 }
 
-// Reactive state
+// Scholarship programs functionality
 const activeTab = ref('sarjana')
 
-// Scholarship programs data
-const scholarshipPrograms = {
-  sarjana: [
-    {
-      title: 'KIPK',
-      description:
-        'Gapai cita-cita dengan bantuan biaya pendidikan dari pemerintah Indonesia',
-      type: 'Eksternal',
-      typeClass: 'bg-shades-blue20 text-shades-blue70',
-      image: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/mask-group-1.png',
-    },
-    {
-      title: 'Keringanan UKT',
-      description:
-        'Dapatkan keringanan biaya studi untuk tetap melanjutkan pendidikan tanpa hambatan',
-      type: 'Internal',
-      typeClass: 'bg-shades-yellow40 text-[#ea9f1c]',
-      image: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/mask-group-2.png',
-    },
-    {
-      title: 'Mahasiswa Kerja',
-      description:
-        'Raih peluang dan kesempatan bekerja di ITB untuk membantu finansialmu',
-      type: 'Eksternal',
-      typeClass: 'bg-shades-blue20 text-shades-blue70',
-      image: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/mask-group-3.png',
-    },
-    {
-      title: 'Beasiswa Non Pemerintah',
-      description:
-        'Wujudkan impian melalui beragam beasiswa lembaga swadaya hingga yayasan',
-      type: 'Internal',
-      typeClass: 'bg-shades-yellow40 text-[#ea9f1c]',
-      image: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/mask-group-4.png',
-    },
-  ],
-  pascasarjana: [
-    {
-      title: 'Beasiswa S2',
-      description:
-        'Program beasiswa untuk jenjang magister dengan berbagai bidang studi',
-      type: 'Eksternal',
-      typeClass: 'bg-shades-blue20 text-shades-blue70',
-      image: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/mask-group-1.png',
-    },
-    {
-      title: 'Beasiswa S3',
-      description:
-        'Program beasiswa untuk jenjang doktor dengan fokus penelitian',
-      type: 'Internal',
-      typeClass: 'bg-shades-yellow40 text-[#ea9f1c]',
-      image: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/mask-group-2.png',
-    },
-  ],
-}
-
-// Computed property for current programs
 const currentPrograms = computed(() => {
   return scholarshipPrograms[activeTab.value] || []
 })
 
-// Featured scholarships data
-const featuredScholarships = [
-  {
-    title: 'Beasiswa Roberto Rocca',
-    provider: 'Ikatan Alumni ITB 1978',
-    period: '1 Mei-8 Juni 2024',
-    quota: '5 Orang',
-    type: 'Eksternal',
-    level: 'Sarjana',
-    status: 'Segera Berakhir',
-  },
-  {
-    title: 'Beasiswa Roberto Rocca',
-    provider: 'Ikatan Alumni ITB 1978',
-    period: '1 Juni-15 Juli 2024',
-    quota: '10 Orang',
-    type: 'Internal',
-    level: 'Sarjana',
-    status: 'Tersedia',
-  },
-  {
-    title: 'Beasiswa Roberto Rocca',
-    provider: 'Ikatan Alumni ITB 1978',
-    period: '1 Mei-8 Juni 2024',
-    quota: '5 Orang',
-    type: 'Eksternal',
-    level: 'Sarjana',
-    status: 'Segera Berakhir',
-  },
-]
-
-// Announcements data
-const announcements = [
-  {
-    title: 'Pembukaan Pendaftaran Beasiswa Unggulan ITB 2024',
-    date: '15 Maret 2024',
-    image: '/assets/img/announcement-1.jpg',
-  },
-  {
-    title: 'Workshop Persiapan Berkas Beasiswa untuk Mahasiswa Baru',
-    date: '22 Maret 2024',
-    image: '/assets/img/announcement-2.jpg',
-  },
-  {
-    title: 'Sosialisasi Program Bantuan Keuangan Mahasiswa',
-    date: '28 Maret 2024',
-    image: '/assets/img/announcement-3.png',
-  },
-  {
-    title: 'Pengumuman Hasil Seleksi Beasiswa KIP-Kuliah Gelombang 1',
-    date: '5 April 2024',
-    image: '/assets/img/announcement-4.jpg',
-  },
-]
-
-// Partners data
-const partners = [
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/abb-logo-1.png',
-    alt: 'ABB Logo',
-  },
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/paybill-logo-wjbzle-1577680057993-1.png',
-    alt: 'Paybill Logo',
-  },
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/logo-ia-itb-1.png',
-    alt: 'Logo IA ITB',
-  },
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/bca-logo-bank-central-asia-1.png',
-    alt: 'BCA Logo Bank',
-  },
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/bank-indonesia-1.png',
-    alt: 'Bank Indonesia',
-  },
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/36384348ef9d7bfff66da6da9e975d56-1.png',
-    alt: 'Partner Logo',
-  },
-  {
-    logo: 'https://c.animaapp.com/mcyb8rkkDU1Yru/img/baznas-1.png',
-    alt: 'Baznas',
-  },
-]
-
-// Partners carousel state
+// Partners carousel functionality
 const currentSlide = ref(0)
 const autoSlideInterval = ref(null)
 
-// Group partners into slides (5 partners per slide)
 const partnerSlides = computed(() => {
   const slideSize = 5
   const slides = []
@@ -829,13 +665,11 @@ const partnerSlides = computed(() => {
   return slides
 })
 
-// Navigate to specific slide
 const goToSlide = index => {
   currentSlide.value = index
   resetAutoSlide()
 }
 
-// Auto-slide functionality
 const startAutoSlide = () => {
   autoSlideInterval.value = setInterval(() => {
     currentSlide.value = (currentSlide.value + 1) % partnerSlides.value.length
@@ -859,30 +693,6 @@ onUnmounted(() => {
     clearInterval(autoSlideInterval.value)
   }
 })
-
-// FAQ data
-const faqs = [
-  {
-    question: 'Siapa yang berhak mendaftar beasiswa?',
-    answer:
-      'Beasiswa terbuka untuk seluruh mahasiswa ITB yang memenuhi kriteria akademik dan finansial yang telah ditetapkan. Mahasiswa aktif dari semua jenjang (S1, S2, S3) dapat mendaftar sesuai dengan program beasiswa yang tersedia.',
-  },
-  {
-    question: 'Apakah saya bisa mengajukan beasiswa untuk kedua kalinya?',
-    answer:
-      'Ya, Anda dapat mengajukan beasiswa untuk kedua kalinya dengan ketentuan bahwa prestasi akademik tetap memenuhi syarat dan situasi finansial masih memerlukan bantuan. Namun, prioritas akan diberikan kepada mahasiswa yang belum pernah menerima beasiswa.',
-  },
-  {
-    question: 'Dokumen apa saja yang dibutuhkan untuk pendaftaran beasiswa?',
-    answer:
-      'Dokumen yang diperlukan meliputi: transkrip nilai terbaru, surat keterangan penghasilan orang tua, kartu keluarga, surat rekomendasi dari dosen, essay motivasi, dan dokumen pendukung lainnya sesuai jenis beasiswa yang dilamar.',
-  },
-  {
-    question: 'Kapan saya bisa mendaftar beasiswa?',
-    answer:
-      'Pendaftaran beasiswa biasanya dibuka setiap semester dengan jadwal yang berbeda-beda untuk setiap jenis beasiswa. Informasi lengkap mengenai jadwal pendaftaran dapat dilihat di website resmi atau pengumuman dari bagian kemahasiswaan ITB.',
-  },
-]
 </script>
 
 <style scoped>
