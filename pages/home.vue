@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="pt-[70px]">
     <!-- Hero Section -->
     <section
       class="relative overflow-hidden bg-gradient-to-r from-blue-50 to-white"

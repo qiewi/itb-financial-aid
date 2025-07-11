@@ -1,16 +1,20 @@
 <template>
   <header
-    class="sticky top-0 z-50 h-[70px] w-full border-b border-gray-200 bg-white shadow-sm"
+    class="fixed top-0 right-0 left-0 z-[9999] h-[70px] w-full border-b border-gray-200 bg-white shadow-sm"
   >
     <div
-      class="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-8 py-4"
+      class="mx-auto flex h-full max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
     >
       <!-- Logo and Institution Name -->
       <div class="flex items-center gap-3">
         <div
           class="flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-full border-2 border-[var(--button-color)] bg-white"
         >
-          <img src="/assets/img/itb-logo.jpg" alt="ITB Logo" class="h-[46px] w-[46px] object-contain" />
+          <img
+            src="/assets/img/itb-logo.jpg"
+            alt="ITB Logo"
+            class="h-[46px] w-[46px] object-contain"
+          />
         </div>
         <div class="flex flex-col">
           <span class="text-sm leading-tight font-semibold text-gray-800">
