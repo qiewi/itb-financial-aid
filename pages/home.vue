@@ -271,6 +271,72 @@
         </div>
       </div>
     </section>
+
+    <!-- CTA Banner -->
+    <section class="w-full bg-white py-6">
+      <div class="container mx-auto px-4">
+        <div class="relative h-[238px] w-full rounded-[25px]">
+          <!-- Shadow/blur element -->
+          <div
+            class="absolute top-[35px] left-[15px] h-[178px] w-[98%] rounded-[25px] bg-[#0660a64f] blur-[37.5px]"
+          />
+
+          <!-- Main banner -->
+          <div
+            class="absolute top-0 left-0 h-[238px] w-full overflow-hidden rounded-[25px] bg-[linear-gradient(342deg,rgba(6,96,166,1)_0%,rgba(106,160,202,1)_100%)]"
+          >
+            <!-- Background decorative elements -->
+            <div
+              class="absolute top-0 left-[325px] h-[382px] w-[382px] rotate-180 rounded-[191px] bg-[linear-gradient(102deg,rgba(21,106,172,0.36)_0%,rgba(55,128,184,0)_100%)]"
+            />
+            <div
+              class="absolute top-[328px] left-0 h-[181px] w-[181px] rounded-[90.5px] bg-[linear-gradient(20deg,rgba(36,123,190,0)_0%,rgba(126,199,255,1)_100%)]"
+            />
+            <div
+              class="absolute top-[-52px] right-[20px] h-[365px] w-[365px] rounded-[182.5px] bg-[linear-gradient(75deg,rgba(21,106,172,0.36)_0%,rgba(0,103,171,1)_100%)]"
+            />
+
+            <!-- Content -->
+            <div
+              class="relative z-10 flex h-full items-center justify-between p-6 sm:p-8 lg:p-10"
+            >
+              <!-- Left side: Title -->
+              <div class="max-w-[400px] flex-1 lg:max-w-[500px]">
+                <h2
+                  class="text-2xl leading-tight font-bold text-white sm:text-3xl lg:text-4xl"
+                >
+                  Buka Peluang Besar Menggapai Mimpi Diri melalui Beasiswa
+                </h2>
+              </div>
+
+              <!-- Center: ITB Logo -->
+              <div
+                class="mx-6 hidden items-center justify-center sm:flex lg:mx-8"
+              >
+                <div
+                  class="flex h-24 w-24 items-center justify-center rounded-full bg-white p-2 lg:h-32 lg:w-32"
+                >
+                  <img
+                    src="/assets/img/logo-itb.png"
+                    alt="ITB Logo"
+                    class="h-full w-full rounded-full object-contain"
+                  />
+                </div>
+              </div>
+
+              <!-- Right side: CTA Button -->
+              <div class="flex-shrink-0">
+                <button
+                  class="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[var(--button-color)] shadow-lg transition-colors hover:bg-gray-50 lg:px-8 lg:py-4 lg:text-base"
+                >
+                  Daftar Beasiswa
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
