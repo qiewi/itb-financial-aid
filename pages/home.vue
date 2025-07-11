@@ -120,6 +120,133 @@
         </div>
       </div>
     </section>
+
+    <!-- Statistics Section -->
+    <section class="relative w-full bg-white py-16">
+      <div class="container mx-auto px-4">
+        <!-- Background elements -->
+        <div
+          class="absolute top-[143px] left-[-190px] h-[332px] w-[329px] rotate-[-7.69deg] rounded-[164.64px/166.1px] bg-[linear-gradient(184deg,rgba(6,157,216,0.07)_0%,rgba(255,255,255,0)_100%)]"
+        />
+        <div
+          class="absolute top-[-122px] right-[-100px] h-[397px] w-[391px] rotate-[-77.80deg] rounded-[195.28px/198.58px] bg-[linear-gradient(121deg,rgba(6,157,216,0.07)_0%,rgba(255,255,255,0)_100%)]"
+        />
+
+        <!-- Heading -->
+        <h2 class="mb-4 text-center text-4xl font-bold text-[#1a1a1a]">
+          Perubahan Besar yang Kami Lakukan
+        </h2>
+        <p
+          class="mx-auto mb-12 max-w-[671px] text-center text-base text-[#4c4c4c]"
+        >
+          Tidak hanya beasiswa, namun kami juga memberikan dukungan pengembangan
+          karier
+        </p>
+
+        <!-- Features -->
+        <div class="mb-16 flex flex-wrap justify-center gap-8">
+          <div class="flex w-[230px] items-center gap-4">
+            <img
+              class="h-[72px] w-[67.15px]"
+              alt="Dukungan finansial"
+              src="/assets/img/money-icon.png"
+            />
+            <div class="w-[145px] text-lg font-semibold text-[#1a1a1a]">
+              Dukungan Finansial
+            </div>
+          </div>
+
+          <div class="flex w-[230px] items-center gap-4">
+            <img
+              class="h-[72px] w-[67.15px]"
+              alt="Softskill"
+              src="/assets/img/softskill-icon.png"
+            />
+            <div class="text-lg font-semibold text-[#1a1a1a]">
+              Pengembangan <br />
+              Soft Skills
+            </div>
+          </div>
+
+          <div class="flex w-[230px] items-center gap-4">
+            <img
+              class="h-[72px] w-[67.15px]"
+              alt="Jaringan Profesional"
+              src="/assets/img/jaringan-icon.png"
+            />
+            <div class="text-lg font-semibold text-[#1a1a1a]">
+              Jaringan <br />
+              Profesional
+            </div>
+          </div>
+
+          <div class="flex w-[230px] items-center gap-4">
+            <img
+              class="h-[72px] w-[67.15px]"
+              alt="Prestasi"
+              src="/assets/img/prestasi-icon.png"
+            />
+            <div class="text-lg font-semibold text-[#1a1a1a]">
+              Apresiasi <br />
+              Prestasi
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div
+          class="mx-auto grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-primary rounded-lg py-8"
+        >
+          <!-- Statistic 1 -->
+          <div
+            class="border-r-1 border-primary bg-white px-6 lg:px-8 text-start text-primary"
+          >
+            <div
+              class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl"
+            >
+              15000+
+            </div>
+            <p
+              class="text-base font-semibold leading-relaxed opacity-80 lg:text-lg"
+            >
+              Mahasiswa dapat melanjutkan kuliah dengan beasiswa
+            </p>
+          </div>
+
+          <!-- Statistic 2 -->
+          <div
+            class="border-r-1 border-primary bg-white px-6 lg:px-8 text-start text-primary"
+          >
+            <div
+              class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl"
+            >
+              80%
+            </div>
+            <p
+              class="text-base font-semibold leading-relaxed opacity-80 lg:text-lg"
+            >
+              Awardee beasiswa memperoleh IPK > 3,5
+            </p>
+          </div>
+
+          <!-- Statistic 3 -->
+          <div
+            class=" bg-white px-6 md:col-span-2 lg:col-span-1 lg:px-8 text-start text-primary"
+          >
+            <div
+              class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl"
+            >
+              80%
+            </div>
+            <p
+              class="text-base font-semibold leading-relaxed opacity-80 lg:text-lg"
+            >
+              Awardee berhasil mendapatkan pekerjaan tetap sebelum lulus
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
