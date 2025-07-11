@@ -103,7 +103,7 @@
 
         <!-- Scholarship Cards -->
         <div class="mb-8 flex flex-wrap justify-center gap-6">
-          <ScholarshipCard
+          <CardsProgram
             v-for="(program, index) in currentPrograms"
             :key="index"
             :program="program"
@@ -195,19 +195,17 @@
 
         <!-- Stats -->
         <div
-          class="mx-auto grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-primary rounded-lg py-8"
+          class="border-primary mx-auto grid max-w-6xl grid-cols-1 rounded-lg border py-8 md:grid-cols-2 lg:grid-cols-3"
         >
           <!-- Statistic 1 -->
           <div
-            class="border-r-1 border-primary bg-white px-6 lg:px-8 text-start text-primary"
+            class="border-primary text-primary border-r-1 bg-white px-6 text-start lg:px-8"
           >
-            <div
-              class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl"
-            >
+            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">
               15000+
             </div>
             <p
-              class="text-base font-semibold leading-relaxed opacity-80 lg:text-lg"
+              class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg"
             >
               Mahasiswa dapat melanjutkan kuliah dengan beasiswa
             </p>
@@ -215,15 +213,13 @@
 
           <!-- Statistic 2 -->
           <div
-            class="border-r-1 border-primary bg-white px-6 lg:px-8 text-start text-primary"
+            class="border-primary text-primary border-r-1 bg-white px-6 text-start lg:px-8"
           >
-            <div
-              class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl"
-            >
+            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">
               80%
             </div>
             <p
-              class="text-base font-semibold leading-relaxed opacity-80 lg:text-lg"
+              class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg"
             >
               Awardee beasiswa memperoleh IPK > 3,5
             </p>
@@ -231,15 +227,13 @@
 
           <!-- Statistic 3 -->
           <div
-            class=" bg-white px-6 md:col-span-2 lg:col-span-1 lg:px-8 text-start text-primary"
+            class="text-primary bg-white px-6 text-start md:col-span-2 lg:col-span-1 lg:px-8"
           >
-            <div
-              class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl"
-            >
+            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">
               80%
             </div>
             <p
-              class="text-base font-semibold leading-relaxed opacity-80 lg:text-lg"
+              class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg"
             >
               Awardee berhasil mendapatkan pekerjaan tetap sebelum lulus
             </p>
@@ -247,11 +241,41 @@
         </div>
       </div>
     </section>
+
+    <!-- Featured Scholarships Section -->
+    <section class="w-full bg-white py-16">
+      <div class="container mx-auto px-4">
+        <h2
+          class="mx-auto mb-14 max-w-4xl text-center text-3xl font-bold text-[#1a1a1a] md:text-4xl"
+        >
+          Temukan Beasiswa Impianmu dan Persiapkan Diri Menjadi Penerima
+          Beasiswa
+        </h2>
+
+        <div
+          class="mx-auto mb-14 grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+        >
+          <CardsScholarship
+            v-for="(scholarship, index) in featuredScholarships"
+            :key="index"
+            :scholarship="scholarship"
+          />
+        </div>
+
+        <div class="flex justify-center">
+          <button
+            class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg"
+          >
+            Lihat Selengkapnya
+          </button>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
 <script setup>
-import ScholarshipCard from '~/components/Scholarship/ScholarshipCard.vue'
+import CardsScholarship from '~/components/Cards/Scholarship.vue'
 
 // Reactive state
 const activeTab = ref('sarjana')
@@ -316,4 +340,35 @@ const scholarshipPrograms = {
 const currentPrograms = computed(() => {
   return scholarshipPrograms[activeTab.value] || []
 })
+
+// Featured scholarships data
+const featuredScholarships = [
+  {
+    title: 'Beasiswa Roberto Rocca',
+    provider: 'Ikatan Alumni ITB 1978',
+    period: '1 Mei-8 Juni 2024',
+    quota: '5 Orang',
+    type: 'Eksternal',
+    level: 'Sarjana',
+    status: 'Segera Berakhir',
+  },
+  {
+    title: 'Beasiswa Roberto Rocca',
+    provider: 'Ikatan Alumni ITB 1978',
+    period: '1 Juni-15 Juli 2024',
+    quota: '10 Orang',
+    type: 'Internal',
+    level: 'Sarjana',
+    status: 'Tersedia',
+  },
+  {
+    title: 'Beasiswa Roberto Rocca',
+    provider: 'Ikatan Alumni ITB 1978',
+    period: '1 Mei-8 Juni 2024',
+    quota: '5 Orang',
+    type: 'Eksternal',
+    level: 'Sarjana',
+    status: 'Segera Berakhir',
+  },
+]
 </script>
