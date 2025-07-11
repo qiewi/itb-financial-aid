@@ -7,6 +7,7 @@
   --foreground: #171717;
   --primary: #ff6600;
   --secondary: #22a93b;
+  --button-color: #069dd8;
   --ui-primary: var(--primary);
   --ui-secondary: var(--secondary);
   --ui-success: var(--ui-color-success-500);
@@ -151,6 +152,25 @@ img {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Button Color Classes */
+.btn-button-color {
+  background-color: var(--button-color);
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-button-color:hover {
+  background-color: color-mix(in srgb, var(--button-color) 100%, #000 15%);
+}
+
+.text-button-color {
+  color: var(--button-color);
+}
+
+.text-button-color:hover {
+  color: color-mix(in srgb, var(--button-color) 100%, #000 15%);
 }
 
 /* import modules/header.css */
