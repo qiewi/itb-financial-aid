@@ -1,15 +1,16 @@
 <template>
   <main class="app-main">
-    <div class="prose container w-full overflow-auto text-xs">
+    <!-- Debug info - remove in production -->
+    <!-- <div class="prose container w-full overflow-auto text-xs">
       <pre><code>{{ pageData }}</code></pre>
       <hr />
       <pre><code>{{ route.params.slugs }}</code></pre>
-    </div>
+    </div> -->
+
     <span v-if="isLoading">LOADING</span>
     <div v-else>
       <!-- Dynamic component mapping -->
       <LazyPagesDynamic v-if="pageData !== null" :slugs="slug" />
-      <LazyPagesNewsDetail v-if="pageData === null" />
     </div>
   </main>
 </template>
@@ -36,24 +37,26 @@ function findPageByUrl(pages) {
   return null
 }
 
-// onMounted(async () => {
-// const { data: menus } = useNuxtData('main-menus')
+// Get pages data
 const { data: pages } = useNuxtData('pages')
 
 // Safe data access with fallback
 const safePages = computed(() => pages.value?.data || [])
 
-// cachedMenus.value = menus
-// Simulate API fetch based on URL
-// const menus = await fetchMenus()
-const page = findPageByUrl(safePages.value)
+// Handle page loading and error checking
+onMounted(() => {
+  const page = findPageByUrl(safePages.value)
 
-if (page) {
-  pageData.value = page
-}
-
-isLoading.value = false
-// console.log({ fullPath, slug })
-// console.log({ pageData: pageData.value, pages })
-// })
+  if (page) {
+    pageData.value = page
+    isLoading.value = false
+  } else {
+    // Show error page using Nuxt's error handling
+    isLoading.value = false
+    showError({
+      statusCode: 404,
+      statusMessage: 'Page Not Found',
+    })
+  }
+})
 </script>

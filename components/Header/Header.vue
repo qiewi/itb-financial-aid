@@ -6,7 +6,10 @@
       class="mx-auto flex h-full max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
     >
       <!-- Logo and Institution Name -->
-      <div class="flex items-center gap-3">
+      <NuxtLink
+        to="/home"
+        class="flex items-center gap-3"
+      >
         <div
           class="flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-full border-2 border-[var(--button-color)] bg-white"
         >
@@ -24,7 +27,7 @@
             Institut Teknologi Bandung
           </span>
         </div>
-      </div>
+      </NuxtLink>
 
       <!-- Navigation and Actions -->
       <div class="ml-8 flex max-w-[800px] flex-1 items-center justify-between">
