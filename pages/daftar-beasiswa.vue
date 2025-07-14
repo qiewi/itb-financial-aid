@@ -50,14 +50,7 @@
             </div>
 
             <!-- Periode Filter -->
-            <div class="mb-6">
-              <h3 class="mb-3 text-sm font-medium text-gray-900">Periode</h3>
-              <input
-                v-model="selectedPeriode"
-                type="date"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+            <PeriodeFilter v-model="selectedPeriode" />
 
             <!-- IPK Filter -->
             <div class="mb-6">
@@ -211,6 +204,7 @@
 <script setup>
 import DotFilter from '~/components/Filters/DotFilter.vue'
 import BoxFilter from '~/components/Filters/BoxFilter.vue'
+import PeriodeFilter from '~/components/Filters/PeriodeFilter.vue'
 import ScholarshipDetail from '~/components/Cards/ScholarshipDetail.vue'
 import { ref, computed } from 'vue'
 
@@ -434,6 +428,9 @@ const removeFilter = filterValue => {
     )
   } else if (selectedIPK.value.includes(filterValue)) {
     selectedIPK.value = selectedIPK.value.filter(item => item !== filterValue)
+  } else if (filterValue.startsWith('Periode:')) {
+    // Clear date range filter
+    selectedPeriode.value = ''
   }
   // Reset to first page when filter changes
   currentPage.value = 1
@@ -444,8 +441,20 @@ const clearAllFilters = () => {
   selectedEksternal.value = []
   selectedAngkatan.value = []
   selectedIPK.value = []
+  selectedPeriode.value = ''
   // Reset to first page when filters are cleared
   currentPage.value = 1
+}
+
+// Helper function to format date for display
+const formatDateDisplay = dateString => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleDateString('id-ID', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
 }
 
 const activeFilters = computed(() => {
@@ -455,6 +464,11 @@ const activeFilters = computed(() => {
     filters.push(...selectedEksternal.value)
   if (selectedAngkatan.value.length > 0) filters.push(...selectedAngkatan.value)
   if (selectedIPK.value.length > 0) filters.push(...selectedIPK.value)
+  if (selectedPeriode.value) {
+    const [startDate, endDate] = selectedPeriode.value.split('_')
+    const dateDisplay = `${formatDateDisplay(startDate)} - ${formatDateDisplay(endDate)}`
+    filters.push(`Periode: ${dateDisplay}`)
+  }
   return filters
 })
 </script>
