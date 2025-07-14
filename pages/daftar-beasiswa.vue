@@ -11,7 +11,7 @@
 
             <!-- Jenjang Filter (Dot Filter) -->
             <div class="mb-6">
-              <DotFilter
+              <FiltersDotFilter
                 title="Jenjang"
                 :options="jenjangOptions"
                 v-model="selectedJenjang"
@@ -23,7 +23,7 @@
 
               <!-- Internal Filter -->
               <div class="mb-4">
-                <BoxFilter
+                <FiltersBoxFilter
                   title="Internal"
                   :options="internalOptions"
                   v-model="selectedInternal"
@@ -32,7 +32,7 @@
 
               <!-- Eksternal Filter -->
               <div class="mb-4">
-                <BoxFilter
+                <FiltersBoxFilter
                   title="Eksternal"
                   :options="eksternalOptions"
                   v-model="selectedEksternal"
@@ -42,7 +42,7 @@
 
             <!-- Angkatan Filter -->
             <div class="mb-6">
-              <BoxFilter
+              <FiltersBoxFilter
                 title="Angkatan"
                 :options="angkatanOptions"
                 v-model="selectedAngkatan"
@@ -50,11 +50,11 @@
             </div>
 
             <!-- Periode Filter -->
-            <PeriodeFilter v-model="selectedPeriode" />
+            <FiltersPeriodeFilter v-model="selectedPeriode" />
 
             <!-- IPK Filter -->
             <div class="mb-6">
-              <BoxFilter
+              <FiltersBoxFilter
                 title="IPK"
                 :options="ipkOptions"
                 v-model="selectedIPK"
@@ -156,7 +156,7 @@
 
             <!-- Scholarship Cards -->
             <div class="space-y-4">
-              <ScholarshipDetail
+              <CardsScholarshipDetail
                 v-for="scholarship in paginatedScholarships"
                 :key="scholarship.id"
                 :scholarship="scholarship"
@@ -228,10 +228,6 @@
 </template>
 
 <script setup>
-import DotFilter from '~/components/Filters/DotFilter.vue'
-import BoxFilter from '~/components/Filters/BoxFilter.vue'
-import PeriodeFilter from '~/components/Filters/PeriodeFilter.vue'
-import ScholarshipDetail from '~/components/Cards/ScholarshipDetail.vue'
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 
 // Import data constants
@@ -243,7 +239,7 @@ import {
   ipkOptions,
 } from '~/data/scholarshipFilters.js'
 import { scholarships as scholarshipData } from '~/data/scholarships.js'
-import { indonesianMonths, sortOptions } from '~/data/constants.js'
+import { sortOptions } from '~/data/constants.js'
 
 // Data constants are now imported from /data folder
 
@@ -266,38 +262,6 @@ const inputError = ref(false)
 const sortBy = ref('endDate') // Default sort by end date
 const sortOrder = ref('asc') // 'asc' or 'desc'
 
-// Function to format date in Indonesian format
-const formatIndonesianDate = dateString => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  const day = date.getDate()
-  const month = indonesianMonths[date.getMonth()]
-  const year = date.getFullYear()
-  return `${day} ${month} ${year}`
-}
-
-// Function to format registration period
-const formatRegistrationPeriod = (startDate, endDate) => {
-  if (!startDate || !endDate) return ''
-  return `${formatIndonesianDate(startDate)} - ${formatIndonesianDate(endDate)}`
-}
-
-// Function to limit benefits for display on cards
-const limitBenefitsForDisplay = (benefits, maxDisplayed = 3) => {
-  if (!benefits || benefits.length <= maxDisplayed) {
-    return benefits
-  }
-
-  const displayedBenefits = benefits.slice(0, maxDisplayed)
-  const remainingCount = benefits.length - maxDisplayed
-
-  if (remainingCount > 0) {
-    displayedBenefits.push(`${remainingCount} Benefit Lainnya`)
-  }
-
-  return displayedBenefits
-}
-
 // Scholarship data imported from data folder
 const scholarships = ref(scholarshipData)
 
@@ -319,22 +283,10 @@ const filteredScholarships = computed(() => {
   })
 })
 
-// Enhanced scholarships with formatted registration period and sorting
+// Enhanced scholarships with sorting (formatting handled by CardsScholarshipDetail component)
 const enhancedScholarships = computed(() => {
-  const scholarshipsWithPeriod = filteredScholarships.value.map(
-    scholarship => ({
-      ...scholarship,
-      registrationPeriod: formatRegistrationPeriod(
-        scholarship.registrationStartDate,
-        scholarship.registrationEndDate,
-      ),
-      benefits: limitBenefitsForDisplay(scholarship.benefits, 3),
-      fullBenefits: scholarship.benefits, // Keep original benefits for detail view
-    }),
-  )
-
   // Sort scholarships
-  return scholarshipsWithPeriod.sort((a, b) => {
+  return filteredScholarships.value.sort((a, b) => {
     let compareValue = 0
 
     if (sortBy.value === 'endDate') {
@@ -472,7 +424,7 @@ const clearAllFilters = () => {
   currentPage.value = 1
 }
 
-// Helper function to format date for display
+// Helper function to format date for display in filters
 const formatDateDisplay = dateString => {
   if (!dateString) return ''
   const date = new Date(dateString)
