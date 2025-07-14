@@ -77,16 +77,42 @@
                     v-model="searchQuery"
                     type="text"
                     placeholder="Cari Beasiswa Sarjana"
-                    class="w-full rounded-3xl border border-gray-300 py-2 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-3xl border border-gray-300 py-2 pr-4 pl-10 text-black focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <!-- Sort Button -->
-                <button
-                  class="flex items-center gap-2 rounded-3xl border border-gray-300 px-4 py-2 whitespace-nowrap hover:bg-gray-50"
-                >
-                  <UIcon name="i-heroicons-funnel" class="h-4 w-4" />
-                  Urutkan Berdasarkan
-                </button>
+                <div class="relative">
+                  <button
+                    @click="showSortDropdown = !showSortDropdown"
+                    class="flex items-center gap-2 rounded-3xl border border-gray-300 px-4 py-2 whitespace-nowrap text-gray-500 hover:bg-gray-50"
+                  >
+                    <UIcon name="i-heroicons-funnel" class="h-4 w-4" />
+                    {{ currentSortLabel }}
+                    <UIcon name="i-heroicons-chevron-down" class="h-3 w-3" />
+                  </button>
+
+                  <!-- Sort Dropdown -->
+                  <div
+                    v-if="showSortDropdown"
+                    class="absolute top-full right-0 z-50 mt-1 w-56 rounded-lg border border-gray-200 bg-white shadow-lg"
+                  >
+                    <div class="py-1">
+                      <button
+                        v-for="option in sortOptions"
+                        :key="`${option.value}-${option.order}`"
+                        @click="setSortOption(option)"
+                        :class="[
+                          'w-full px-4 py-2 text-left text-sm hover:bg-gray-50',
+                          option.value === sortBy && option.order === sortOrder
+                            ? 'bg-blue-50 font-medium text-blue-600'
+                            : 'text-gray-700',
+                        ]"
+                      >
+                        {{ option.label }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!-- Results Count -->
@@ -94,10 +120,10 @@
                 Menampilkan {{ (currentPage - 1) * itemsPerPage + 1 }}-{{
                   Math.min(
                     currentPage * itemsPerPage,
-                    filteredScholarships.length,
+                    enhancedScholarships.length,
                   )
                 }}
-                dari {{ filteredScholarships.length }} beasiswa untuk
+                dari {{ enhancedScholarships.length }} beasiswa untuk
                 <span class="font-medium text-blue-600">{{
                   selectedJenjang || 'Semua Jenjang'
                 }}</span>
@@ -206,7 +232,7 @@ import DotFilter from '~/components/Filters/DotFilter.vue'
 import BoxFilter from '~/components/Filters/BoxFilter.vue'
 import PeriodeFilter from '~/components/Filters/PeriodeFilter.vue'
 import ScholarshipDetail from '~/components/Cards/ScholarshipDetail.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 // Filter options
 const jenjangOptions = [
@@ -258,7 +284,59 @@ const itemsPerPage = ref(3)
 const pageInput = ref('')
 const inputError = ref(false)
 
-// Sample scholarship data
+// Sorting states
+const sortBy = ref('endDate') // Default sort by end date
+const sortOrder = ref('asc') // 'asc' or 'desc'
+
+// Indonesian month names for date formatting
+const indonesianMonths = [
+  'Januari',
+  'Februari',
+  'Maret',
+  'April',
+  'Mei',
+  'Juni',
+  'Juli',
+  'Agustus',
+  'September',
+  'Oktober',
+  'November',
+  'Desember',
+]
+
+// Function to format date in Indonesian format
+const formatIndonesianDate = dateString => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  const day = date.getDate()
+  const month = indonesianMonths[date.getMonth()]
+  const year = date.getFullYear()
+  return `${day} ${month} ${year}`
+}
+
+// Function to format registration period
+const formatRegistrationPeriod = (startDate, endDate) => {
+  if (!startDate || !endDate) return ''
+  return `${formatIndonesianDate(startDate)} - ${formatIndonesianDate(endDate)}`
+}
+
+// Function to limit benefits for display on cards
+const limitBenefitsForDisplay = (benefits, maxDisplayed = 3) => {
+  if (!benefits || benefits.length <= maxDisplayed) {
+    return benefits
+  }
+
+  const displayedBenefits = benefits.slice(0, maxDisplayed)
+  const remainingCount = benefits.length - maxDisplayed
+
+  if (remainingCount > 0) {
+    displayedBenefits.push(`${remainingCount} Benefit Lainnya`)
+  }
+
+  return displayedBenefits
+}
+
+// Sample scholarship data with full benefits list
 const scholarships = ref([
   {
     id: 1,
@@ -267,13 +345,20 @@ const scholarships = ref([
     type: 'Kerja Sama',
     level: 'Sarjana',
     status: 'Pendaftaran Dibuka',
-    registrationPeriod: '27 Mei-2 Juni 2024',
+    registrationStartDate: '2024-05-27',
+    registrationEndDate: '2024-06-02',
     quota: '20 Orang',
     benefits: [
       'Bantuan UKT',
       'Pembelian Laptop',
       'Biaya Hidup',
-      'Lihat 7 Benefit Lainnya',
+      'Asuransi Kesehatan',
+      'Tunjangan Transportasi',
+      'Biaya Buku',
+      'Program Mentoring',
+      'Sertifikat Kompetensi',
+      'Pelatihan Soft Skills',
+      'Jaringan Alumni',
     ],
   },
   {
@@ -283,13 +368,19 @@ const scholarships = ref([
     type: 'Kerja Sama',
     level: 'Sarjana',
     status: 'Segera Berakhir',
-    registrationPeriod: '1 Mei-8 Juni 2024',
+    registrationStartDate: '2024-05-01',
+    registrationEndDate: '2024-06-08',
     quota: '5 Orang',
     benefits: [
       'Biaya Hidup',
       'Biaya Pendidikan USD 700',
       'UKT',
-      'Lihat 7 Benefit Lainnya',
+      'Tunjangan Riset',
+      'Akses Perpustakaan',
+      'Program Exchange',
+      'Mentoring Industri',
+      'Workshop Teknologi',
+      'Networking Events',
     ],
   },
   {
@@ -299,13 +390,18 @@ const scholarships = ref([
     type: 'Kerja Sama',
     level: 'Sarjana',
     status: 'Pendaftaran Dibuka',
-    registrationPeriod: '15 Juni-30 Juni 2024',
+    registrationStartDate: '2024-06-15',
+    registrationEndDate: '2024-06-30',
     quota: '15 Orang',
     benefits: [
       'Biaya Pendidikan',
       'Tunjangan Bulanan',
       'Asuransi Kesehatan',
-      'Lihat 5 Benefit Lainnya',
+      'Program Magang',
+      'Pelatihan Industri',
+      'Sertifikat Profesi',
+      'Job Guarantee',
+      'Career Counseling',
     ],
   },
   {
@@ -315,13 +411,23 @@ const scholarships = ref([
     type: 'LPDP',
     level: 'Pasca Sarjana',
     status: 'Pendaftaran Dibuka',
-    registrationPeriod: '1 Juli-31 Juli 2024',
+    registrationStartDate: '2024-07-01',
+    registrationEndDate: '2024-07-31',
     quota: '100 Orang',
     benefits: [
       'Biaya Kuliah Penuh',
       'Biaya Hidup',
       'Tiket Pesawat',
-      'Lihat 10 Benefit Lainnya',
+      'Asuransi Kesehatan',
+      'Tunjangan Keluarga',
+      'Biaya Riset',
+      'Visa dan Dokumen',
+      'Persiapan Keberangkatan',
+      'Monitoring Program',
+      'Return Service',
+      'Alumni Network',
+      'Career Development',
+      'Publication Support',
     ],
   },
   {
@@ -330,14 +436,20 @@ const scholarships = ref([
     provider: 'Kementerian Pendidikan',
     type: 'KIPK',
     level: 'Sarjana',
-    status: 'Ditutup',
-    registrationPeriod: '1 Maret-30 April 2024',
+    status: 'Pendaftaran Dibuka',
+    registrationStartDate: '2024-03-01',
+    registrationEndDate: '2024-04-30',
     quota: '200 Orang',
     benefits: [
       'Bantuan UKT',
       'Biaya Hidup Bulanan',
       'Buku dan Alat Tulis',
-      'Lihat 6 Benefit Lainnya',
+      'Laptop/Komputer',
+      'Asuransi Kesehatan',
+      'Program Pengembangan',
+      'Pelatihan Leadership',
+      'Community Service',
+      'Sertifikat Kemahasiswaan',
     ],
   },
   {
@@ -347,13 +459,17 @@ const scholarships = ref([
     type: 'Non Pemerintah',
     level: 'Sarjana',
     status: 'Segera Berakhir',
-    registrationPeriod: '10 Juni-20 Juni 2024',
+    registrationStartDate: '2024-06-10',
+    registrationEndDate: '2024-06-20',
     quota: '25 Orang',
     benefits: [
       'Bantuan Biaya Kuliah',
       'Program Magang',
       'Mentoring Karir',
-      'Lihat 4 Benefit Lainnya',
+      'Training Program',
+      'Financial Literacy',
+      'Networking Events',
+      'Job Opportunity',
     ],
   },
 ])
@@ -366,14 +482,48 @@ const filteredScholarships = computed(() => {
   })
 })
 
+// Enhanced scholarships with formatted registration period and sorting
+const enhancedScholarships = computed(() => {
+  const scholarshipsWithPeriod = filteredScholarships.value.map(
+    scholarship => ({
+      ...scholarship,
+      registrationPeriod: formatRegistrationPeriod(
+        scholarship.registrationStartDate,
+        scholarship.registrationEndDate,
+      ),
+      benefits: limitBenefitsForDisplay(scholarship.benefits, 3),
+      fullBenefits: scholarship.benefits, // Keep original benefits for detail view
+    }),
+  )
+
+  // Sort scholarships
+  return scholarshipsWithPeriod.sort((a, b) => {
+    let compareValue = 0
+
+    if (sortBy.value === 'endDate') {
+      const dateA = new Date(a.registrationEndDate)
+      const dateB = new Date(b.registrationEndDate)
+      compareValue = dateA - dateB
+    } else if (sortBy.value === 'title') {
+      compareValue = a.title.localeCompare(b.title)
+    } else if (sortBy.value === 'quota') {
+      const quotaA = parseInt(a.quota.replace(/\D/g, ''))
+      const quotaB = parseInt(b.quota.replace(/\D/g, ''))
+      compareValue = quotaA - quotaB
+    }
+
+    return sortOrder.value === 'desc' ? -compareValue : compareValue
+  })
+})
+
 const totalPages = computed(() => {
-  return Math.ceil(filteredScholarships.value.length / itemsPerPage.value)
+  return Math.ceil(enhancedScholarships.value.length / itemsPerPage.value)
 })
 
 const paginatedScholarships = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value
   const end = start + itemsPerPage.value
-  return filteredScholarships.value.slice(start, end)
+  return enhancedScholarships.value.slice(start, end)
 })
 
 // Pagination functions
@@ -410,6 +560,48 @@ const handlePageInput = () => {
     }, 2000)
   }
 }
+
+// Sorting functions
+const sortOptions = [
+  { label: 'Tanggal Berakhir (Terlama)', value: 'endDate', order: 'asc' },
+  { label: 'Tanggal Berakhir (Terbaru)', value: 'endDate', order: 'desc' },
+  { label: 'Nama A-Z', value: 'title', order: 'asc' },
+  { label: 'Nama Z-A', value: 'title', order: 'desc' },
+  { label: 'Kuota Terendah', value: 'quota', order: 'asc' },
+  { label: 'Kuota Tertinggi', value: 'quota', order: 'desc' },
+]
+
+const showSortDropdown = ref(false)
+
+const setSortOption = option => {
+  sortBy.value = option.value
+  sortOrder.value = option.order
+  showSortDropdown.value = false
+  currentPage.value = 1 // Reset to first page when sorting changes
+}
+
+const currentSortLabel = computed(() => {
+  const option = sortOptions.find(
+    opt => opt.value === sortBy.value && opt.order === sortOrder.value,
+  )
+  return option ? option.label : 'Tanggal Berakhir (Terlama)'
+})
+
+// Close dropdown when clicking outside
+const handleSortClickOutside = event => {
+  if (showSortDropdown.value && !event.target.closest('.relative')) {
+    showSortDropdown.value = false
+  }
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  document.addEventListener('click', handleSortClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleSortClickOutside)
+})
 
 // Filter removal functions
 const removeFilter = filterValue => {
