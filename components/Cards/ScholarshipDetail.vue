@@ -18,7 +18,7 @@
             :class="statusBadgeClasses"
             class="relative rounded-tr-2xl rounded-bl-[25px] px-3 py-2 text-xs font-bold sm:text-sm"
           >
-            {{ scholarship.status }}
+            {{ enhancedScholarship.status }}
             <!-- Small triangular notch -->
             <div
               :class="statusNotchClasses"
@@ -35,7 +35,7 @@
           <h3
             class="text-lg leading-tight font-bold text-[#1a1a1a] sm:text-xl lg:text-2xl"
           >
-            {{ scholarship.title }}
+            {{ enhancedScholarship.title }}
           </h3>
         </div>
 
@@ -54,7 +54,7 @@
                 href="#"
                 class="text-primary text-sm underline transition-all hover:no-underline lg:text-base"
               >
-                {{ scholarship.provider }}
+                {{ enhancedScholarship.provider }}
               </a>
             </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -63,7 +63,7 @@
                   Jenis Beasiswa
                 </div>
                 <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
-                  {{ scholarship.type }}
+                  {{ enhancedScholarship.type }}
                 </div>
               </div>
               <div class="flex flex-row gap-2">
@@ -71,7 +71,7 @@
                   Jenjang Beasiswa
                 </div>
                 <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
-                  {{ scholarship.level }}
+                  {{ enhancedScholarship.level }}
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@
               </h4>
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div
-                  v-for="benefit in scholarship.benefits"
+                  v-for="benefit in enhancedScholarship.benefits"
                   :key="benefit"
                   class="flex items-center gap-2"
                 >
@@ -109,7 +109,7 @@
                 Periode Pendaftaran
               </div>
               <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
-                {{ scholarship.registrationPeriod }}
+                {{ enhancedScholarship.registrationPeriod }}
               </div>
             </div>
             <div class="flex flex-col gap-2">
@@ -117,7 +117,7 @@
                 Kuota Diterima
               </div>
               <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
-                {{ scholarship.quota }}
+                {{ enhancedScholarship.quota }}
               </div>
             </div>
             <!-- Additional Info or Actions -->
@@ -138,6 +138,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { indonesianMonths } from '~/data/constants.js'
 
 const props = defineProps({
   scholarship: {
@@ -146,9 +147,69 @@ const props = defineProps({
   },
 })
 
+// Function to format date in Indonesian format
+const formatIndonesianDate = dateString => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  const day = date.getDate()
+  const month = indonesianMonths[date.getMonth()]
+  const year = date.getFullYear()
+  return `${day} ${month} ${year}`
+}
+
+// Function to format registration period
+const formatRegistrationPeriod = (startDate, endDate) => {
+  if (!startDate || !endDate) return ''
+  return `${formatIndonesianDate(startDate)} - ${formatIndonesianDate(endDate)}`
+}
+
+// Function to limit benefits for display on cards
+const limitBenefitsForDisplay = (benefits, maxDisplayed = 3) => {
+  if (!benefits || benefits.length <= maxDisplayed) {
+    return benefits
+  }
+
+  const displayedBenefits = benefits.slice(0, maxDisplayed)
+  const remainingCount = benefits.length - maxDisplayed
+
+  if (remainingCount > 0) {
+    displayedBenefits.push(`${remainingCount} Benefit Lainnya`)
+  }
+
+  return displayedBenefits
+}
+
+// Function to format scholarship type for display
+const formatScholarshipType = type => {
+  const typeMap = {
+    'kerja-sama': 'Kerja Sama',
+    lpdp: 'LPDP',
+    kipk: 'KIPK',
+    'non-pemerintah': 'Non Pemerintah',
+    'mahasiswa-kerja': 'Mahasiswa Kerja',
+    'keringanan-ukt': 'Keringanan UKT',
+    gta: 'GTA',
+    fasilitas: 'Fasilitas',
+    bpi: 'BPI',
+  }
+  return typeMap[type] || type
+}
+
+// Enhanced scholarship with formatted data
+const enhancedScholarship = computed(() => ({
+  ...props.scholarship,
+  registrationPeriod: formatRegistrationPeriod(
+    props.scholarship.registrationStartDate,
+    props.scholarship.registrationEndDate,
+  ),
+  type: formatScholarshipType(props.scholarship.type),
+  benefits: limitBenefitsForDisplay(props.scholarship.benefits, 3),
+  fullBenefits: props.scholarship.benefits, // Keep original benefits for detail view
+}))
+
 // Dynamic badge styling based on status
 const statusBadgeClasses = computed(() => {
-  const status = props.scholarship.status?.toLowerCase()
+  const status = enhancedScholarship.value.status?.toLowerCase()
 
   if (status === 'segera berakhir') {
     return 'bg-red-100 text-red-600'
@@ -164,7 +225,7 @@ const statusBadgeClasses = computed(() => {
 
 // Dynamic notch styling to match badge background
 const statusNotchClasses = computed(() => {
-  const status = props.scholarship.status?.toLowerCase()
+  const status = enhancedScholarship.value.status?.toLowerCase()
 
   if (status === 'segera berakhir') {
     return 'border-l-red-100'

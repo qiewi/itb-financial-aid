@@ -6,7 +6,7 @@
       class="mx-auto flex h-full max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
     >
       <!-- Logo and Institution Name -->
-      <div class="flex items-center gap-3">
+      <NuxtLink to="/home" class="flex items-center gap-3">
         <div
           class="flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-full border-2 border-[var(--button-color)] bg-white"
         >
@@ -24,7 +24,7 @@
             Institut Teknologi Bandung
           </span>
         </div>
-      </div>
+      </NuxtLink>
 
       <!-- Navigation and Actions -->
       <div class="ml-8 flex max-w-[800px] flex-1 items-center justify-between">
@@ -34,9 +34,14 @@
             <li v-for="(item, index) in navItems" :key="index">
               <NuxtLink
                 :to="item.url"
-                class="hover:text-button-color flex items-center gap-1 text-gray-700 transition-colors"
+                :class="[
+                  'flex items-center gap-1 transition-colors',
+                  isActive(item.url)
+                    ? 'text-primary font-medium'
+                    : 'hover:text-button-color font-medium text-gray-700',
+                ]"
               >
-                <span class="text-sm font-medium">
+                <span class="text-sm">
                   {{ item.label }}
                 </span>
                 <UIcon
@@ -78,6 +83,9 @@
 </template>
 
 <script setup>
+// Get current route
+const route = useRoute()
+
 // Navigation menu items data
 const navItems = [
   { label: 'Daftar Beasiswa', url: '/daftar-beasiswa', hasDropdown: false },
@@ -90,6 +98,11 @@ const navItems = [
   },
   { label: 'Mitra', url: '/mitra', hasDropdown: false },
 ]
+
+// Function to check if current route matches the nav item
+const isActive = itemUrl => {
+  return route.path === itemUrl
+}
 </script>
 
 <style scoped>
