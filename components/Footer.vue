@@ -189,7 +189,7 @@
                 href="https://instagram.com/itbofficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/instagram-icon.png"
@@ -201,7 +201,7 @@
                 href="https://twitter.com/itbofficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/x-icon.png"
@@ -213,7 +213,7 @@
                 href="https://line.me/itb"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/line-icon.png"
@@ -225,7 +225,7 @@
                 href="https://facebook.com/itb.ac.id"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/facebook-icon.png"
@@ -237,7 +237,7 @@
                 href="https://youtube.com/itbofficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/youtube-icon.png"
@@ -249,7 +249,7 @@
                 href="https://tiktok.com/@itbofficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/tiktok-icon.png"
@@ -261,7 +261,7 @@
                 href="/rss"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block h-8 w-10 rounded-full shadow-md transition-shadow hover:shadow-lg"
+                class="block h-8 w-10 rounded-full"
               >
                 <NuxtImg
                   src="/assets/img/wifi-icon.png"
