@@ -228,46 +228,20 @@
 </template>
 
 <script setup>
-import DotFilter from '~/components/Filters/DotFilter.vue'
-import BoxFilter from '~/components/Filters/BoxFilter.vue'
-import PeriodeFilter from '~/components/Filters/PeriodeFilter.vue'
-import ScholarshipDetail from '~/components/Cards/ScholarshipDetail.vue'
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 
-// Filter options
-const jenjangOptions = [
-  { label: 'Sarjana', value: 'Sarjana' },
-  { label: 'Pasca Sarjana', value: 'Pasca Sarjana' },
-]
+// Import data constants
+import {
+  jenjangOptions,
+  internalOptions,
+  eksternalOptions,
+  angkatanOptions,
+  ipkOptions,
+} from '~/data/scholarshipFilters.js'
+import { scholarships as scholarshipData } from '~/data/scholarships.js'
+import { sortOptions } from '~/data/constants.js'
 
-const internalOptions = [
-  { label: 'Mahasiswa Kerja', value: 'mahasiswa-kerja' },
-  { label: 'Keringanan UKT', value: 'keringanan-ukt' },
-  { label: 'GTA', value: 'gta' },
-  { label: 'Fasilitas', value: 'fasilitas' },
-]
-
-const eksternalOptions = [
-  { label: 'KIPK', value: 'kipk' },
-  { label: 'LPDP', value: 'lpdp' },
-  { label: 'BPI', value: 'bpi' },
-  { label: 'Kerja Sama', value: 'kerja-sama' },
-  { label: 'Non Pemerintah', value: 'non-pemerintah' },
-]
-
-const angkatanOptions = [
-  { label: '2024', value: '2024' },
-  { label: '2023', value: '2023' },
-  { label: '2022', value: '2022' },
-  { label: '2021', value: '2021' },
-  { label: '2020', value: '2020' },
-]
-
-const ipkOptions = [
-  { label: '1.00 - 2.00', value: '1-2' },
-  { label: '2.00 - 3.00', value: '2-3' },
-  { label: '3.00 - 4.00', value: '3-4' },
-]
+// Data constants are now imported from /data folder
 
 // Reactive filter states
 const searchQuery = ref('')
@@ -288,191 +262,8 @@ const inputError = ref(false)
 const sortBy = ref('endDate') // Default sort by end date
 const sortOrder = ref('asc') // 'asc' or 'desc'
 
-// Indonesian month names for date formatting
-const indonesianMonths = [
-  'Januari',
-  'Februari',
-  'Maret',
-  'April',
-  'Mei',
-  'Juni',
-  'Juli',
-  'Agustus',
-  'September',
-  'Oktober',
-  'November',
-  'Desember',
-]
-
-// Function to format date in Indonesian format
-const formatIndonesianDate = dateString => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  const day = date.getDate()
-  const month = indonesianMonths[date.getMonth()]
-  const year = date.getFullYear()
-  return `${day} ${month} ${year}`
-}
-
-// Function to format registration period
-const formatRegistrationPeriod = (startDate, endDate) => {
-  if (!startDate || !endDate) return ''
-  return `${formatIndonesianDate(startDate)} - ${formatIndonesianDate(endDate)}`
-}
-
-// Function to limit benefits for display on cards
-const limitBenefitsForDisplay = (benefits, maxDisplayed = 3) => {
-  if (!benefits || benefits.length <= maxDisplayed) {
-    return benefits
-  }
-
-  const displayedBenefits = benefits.slice(0, maxDisplayed)
-  const remainingCount = benefits.length - maxDisplayed
-
-  if (remainingCount > 0) {
-    displayedBenefits.push(`${remainingCount} Benefit Lainnya`)
-  }
-
-  return displayedBenefits
-}
-
-// Sample scholarship data with full benefits list
-const scholarships = ref([
-  {
-    id: 1,
-    title: 'Beasiswa TASLA Tahun 2024',
-    provider: 'Institut Teknologi Bandung',
-    type: 'Kerja Sama',
-    level: 'Sarjana',
-    status: 'Pendaftaran Dibuka',
-    registrationStartDate: '2024-05-27',
-    registrationEndDate: '2024-06-02',
-    quota: '20 Orang',
-    benefits: [
-      'Bantuan UKT',
-      'Pembelian Laptop',
-      'Biaya Hidup',
-      'Asuransi Kesehatan',
-      'Tunjangan Transportasi',
-      'Biaya Buku',
-      'Program Mentoring',
-      'Sertifikat Kompetensi',
-      'Pelatihan Soft Skills',
-      'Jaringan Alumni',
-    ],
-  },
-  {
-    id: 2,
-    title: 'Beasiswa Roberto Rocca',
-    provider: 'Roberto Rocca',
-    type: 'Kerja Sama',
-    level: 'Sarjana',
-    status: 'Segera Berakhir',
-    registrationStartDate: '2024-05-01',
-    registrationEndDate: '2024-06-08',
-    quota: '5 Orang',
-    benefits: [
-      'Biaya Hidup',
-      'Biaya Pendidikan USD 700',
-      'UKT',
-      'Tunjangan Riset',
-      'Akses Perpustakaan',
-      'Program Exchange',
-      'Mentoring Industri',
-      'Workshop Teknologi',
-      'Networking Events',
-    ],
-  },
-  {
-    id: 3,
-    title: 'Beasiswa Badjatex Tahun 2024',
-    provider: 'PT Badjatex',
-    type: 'Kerja Sama',
-    level: 'Sarjana',
-    status: 'Pendaftaran Dibuka',
-    registrationStartDate: '2024-06-15',
-    registrationEndDate: '2024-06-30',
-    quota: '15 Orang',
-    benefits: [
-      'Biaya Pendidikan',
-      'Tunjangan Bulanan',
-      'Asuransi Kesehatan',
-      'Program Magang',
-      'Pelatihan Industri',
-      'Sertifikat Profesi',
-      'Job Guarantee',
-      'Career Counseling',
-    ],
-  },
-  {
-    id: 4,
-    title: 'Beasiswa LPDP 2024',
-    provider: 'Lembaga Pengelola Dana Pendidikan',
-    type: 'LPDP',
-    level: 'Pasca Sarjana',
-    status: 'Pendaftaran Dibuka',
-    registrationStartDate: '2024-07-01',
-    registrationEndDate: '2024-07-31',
-    quota: '100 Orang',
-    benefits: [
-      'Biaya Kuliah Penuh',
-      'Biaya Hidup',
-      'Tiket Pesawat',
-      'Asuransi Kesehatan',
-      'Tunjangan Keluarga',
-      'Biaya Riset',
-      'Visa dan Dokumen',
-      'Persiapan Keberangkatan',
-      'Monitoring Program',
-      'Return Service',
-      'Alumni Network',
-      'Career Development',
-      'Publication Support',
-    ],
-  },
-  {
-    id: 5,
-    title: 'Beasiswa KIP Kuliah 2024',
-    provider: 'Kementerian Pendidikan',
-    type: 'KIPK',
-    level: 'Sarjana',
-    status: 'Pendaftaran Dibuka',
-    registrationStartDate: '2024-03-01',
-    registrationEndDate: '2024-04-30',
-    quota: '200 Orang',
-    benefits: [
-      'Bantuan UKT',
-      'Biaya Hidup Bulanan',
-      'Buku dan Alat Tulis',
-      'Laptop/Komputer',
-      'Asuransi Kesehatan',
-      'Program Pengembangan',
-      'Pelatihan Leadership',
-      'Community Service',
-      'Sertifikat Kemahasiswaan',
-    ],
-  },
-  {
-    id: 6,
-    title: 'Beasiswa BCA Finance',
-    provider: 'PT BCA Finance',
-    type: 'Non Pemerintah',
-    level: 'Sarjana',
-    status: 'Segera Berakhir',
-    registrationStartDate: '2024-06-10',
-    registrationEndDate: '2024-06-20',
-    quota: '25 Orang',
-    benefits: [
-      'Bantuan Biaya Kuliah',
-      'Program Magang',
-      'Mentoring Karir',
-      'Training Program',
-      'Financial Literacy',
-      'Networking Events',
-      'Job Opportunity',
-    ],
-  },
-])
+// Scholarship data imported from data folder
+const scholarships = ref(scholarshipData)
 
 // Computed properties
 const filteredScholarships = computed(() => {
@@ -492,22 +283,10 @@ const filteredScholarships = computed(() => {
   })
 })
 
-// Enhanced scholarships with formatted registration period and sorting
+// Enhanced scholarships with sorting
 const enhancedScholarships = computed(() => {
-  const scholarshipsWithPeriod = filteredScholarships.value.map(
-    scholarship => ({
-      ...scholarship,
-      registrationPeriod: formatRegistrationPeriod(
-        scholarship.registrationStartDate,
-        scholarship.registrationEndDate,
-      ),
-      benefits: limitBenefitsForDisplay(scholarship.benefits, 3),
-      fullBenefits: scholarship.benefits, // Keep original benefits for detail view
-    }),
-  )
-
   // Sort scholarships
-  return scholarshipsWithPeriod.sort((a, b) => {
+  return filteredScholarships.value.sort((a, b) => {
     let compareValue = 0
 
     if (sortBy.value === 'endDate') {
@@ -572,15 +351,6 @@ const handlePageInput = () => {
 }
 
 // Sorting functions
-const sortOptions = [
-  { label: 'Tanggal Berakhir (Terlama)', value: 'endDate', order: 'asc' },
-  { label: 'Tanggal Berakhir (Terbaru)', value: 'endDate', order: 'desc' },
-  { label: 'Nama A-Z', value: 'title', order: 'asc' },
-  { label: 'Nama Z-A', value: 'title', order: 'desc' },
-  { label: 'Kuota Terendah', value: 'quota', order: 'asc' },
-  { label: 'Kuota Tertinggi', value: 'quota', order: 'desc' },
-]
-
 const showSortDropdown = ref(false)
 
 const setSortOption = option => {
