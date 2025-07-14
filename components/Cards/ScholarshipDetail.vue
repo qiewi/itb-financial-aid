@@ -179,6 +179,22 @@ const limitBenefitsForDisplay = (benefits, maxDisplayed = 3) => {
   return displayedBenefits
 }
 
+// Function to format scholarship type for display
+const formatScholarshipType = type => {
+  const typeMap = {
+    'kerja-sama': 'Kerja Sama',
+    lpdp: 'LPDP',
+    kipk: 'KIPK',
+    'non-pemerintah': 'Non Pemerintah',
+    'mahasiswa-kerja': 'Mahasiswa Kerja',
+    'keringanan-ukt': 'Keringanan UKT',
+    gta: 'GTA',
+    fasilitas: 'Fasilitas',
+    bpi: 'BPI',
+  }
+  return typeMap[type] || type
+}
+
 // Enhanced scholarship with formatted data
 const enhancedScholarship = computed(() => ({
   ...props.scholarship,
@@ -186,6 +202,7 @@ const enhancedScholarship = computed(() => ({
     props.scholarship.registrationStartDate,
     props.scholarship.registrationEndDate,
   ),
+  type: formatScholarshipType(props.scholarship.type),
   benefits: limitBenefitsForDisplay(props.scholarship.benefits, 3),
   fullBenefits: props.scholarship.benefits, // Keep original benefits for detail view
 }))

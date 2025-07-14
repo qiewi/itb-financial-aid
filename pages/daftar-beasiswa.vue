@@ -247,10 +247,10 @@ import { sortOptions } from '~/data/constants.js'
 const searchQuery = ref('')
 const selectedJenjang = ref('Sarjana')
 const selectedInternal = ref([])
-const selectedEksternal = ref(['kerja-sama', 'non-pemerintah'])
-const selectedAngkatan = ref(['2024', '2023'])
+const selectedEksternal = ref([])
+const selectedAngkatan = ref([])
 const selectedPeriode = ref('')
-const selectedIPK = ref(['1-2'])
+const selectedIPK = ref([])
 
 // Pagination states
 const currentPage = ref(1)
@@ -277,8 +277,63 @@ const filteredScholarships = computed(() => {
       }
     }
 
-    // Add other filtering logic here based on selected filters
-    // For now, return true for all other filters
+    // Jenjang filter - filter by scholarship level
+    if (selectedJenjang.value && selectedJenjang.value !== 'Semua Jenjang') {
+      if (scholarship.level !== selectedJenjang.value) {
+        return false
+      }
+    }
+
+    // Internal kategori filter - filter by internal scholarship types
+    if (selectedInternal.value.length > 0) {
+      if (!selectedInternal.value.includes(scholarship.type)) {
+        return false
+      }
+    }
+
+    // External kategori filter - filter by external scholarship types
+    if (selectedEksternal.value.length > 0) {
+      if (!selectedEksternal.value.includes(scholarship.type)) {
+        return false
+      }
+    }
+
+    // Angkatan filter - check if any selected angkatan matches scholarship angkatan
+    if (selectedAngkatan.value.length > 0) {
+      const hasMatchingAngkatan = selectedAngkatan.value.some(angkatan =>
+        scholarship.angkatan.includes(angkatan),
+      )
+      if (!hasMatchingAngkatan) {
+        return false
+      }
+    }
+
+    // IPK filter - check if any selected IPK range matches scholarship IPK range
+    if (selectedIPK.value.length > 0) {
+      const hasMatchingIPK = selectedIPK.value.some(ipk =>
+        scholarship.ipkRange.includes(ipk),
+      )
+      if (!hasMatchingIPK) {
+        return false
+      }
+    }
+
+    // Periode filter - check if scholarship registration period overlaps with selected period
+    if (selectedPeriode.value) {
+      const [startDate, endDate] = selectedPeriode.value.split('_')
+      const selectedStart = new Date(startDate)
+      const selectedEnd = new Date(endDate)
+      const scholarshipStart = new Date(scholarship.registrationStartDate)
+      const scholarshipEnd = new Date(scholarship.registrationEndDate)
+
+      // Check if there's any overlap between the date ranges
+      const hasOverlap =
+        scholarshipStart <= selectedEnd && scholarshipEnd >= selectedStart
+      if (!hasOverlap) {
+        return false
+      }
+    }
+
     return true
   })
 })
@@ -380,6 +435,21 @@ watch(searchQuery, () => {
   currentPage.value = 1
 })
 
+watch(
+  [
+    selectedJenjang,
+    selectedInternal,
+    selectedEksternal,
+    selectedAngkatan,
+    selectedIPK,
+    selectedPeriode,
+  ],
+  () => {
+    // Reset to first page when any filter changes
+    currentPage.value = 1
+  },
+)
+
 // Lifecycle hooks
 onMounted(() => {
   document.addEventListener('click', handleSortClickOutside)
@@ -390,26 +460,49 @@ onBeforeUnmount(() => {
 })
 
 // Filter removal functions
-const removeFilter = filterValue => {
-  // Check which filter array contains this value and remove it
-  if (selectedInternal.value.includes(filterValue)) {
+const removeFilter = filterLabel => {
+  // Handle internal filters
+  const internalOption = internalOptions.find(opt => opt.label === filterLabel)
+  if (internalOption) {
     selectedInternal.value = selectedInternal.value.filter(
-      item => item !== filterValue,
+      item => item !== internalOption.value,
     )
-  } else if (selectedEksternal.value.includes(filterValue)) {
+  }
+
+  // Handle external filters
+  const eksternalOption = eksternalOptions.find(
+    opt => opt.label === filterLabel,
+  )
+  if (eksternalOption) {
     selectedEksternal.value = selectedEksternal.value.filter(
-      item => item !== filterValue,
+      item => item !== eksternalOption.value,
     )
-  } else if (selectedAngkatan.value.includes(filterValue)) {
+  }
+
+  // Handle angkatan filters
+  if (filterLabel.startsWith('Angkatan ')) {
+    const angkatanValue = filterLabel.replace('Angkatan ', '')
     selectedAngkatan.value = selectedAngkatan.value.filter(
-      item => item !== filterValue,
+      item => item !== angkatanValue,
     )
-  } else if (selectedIPK.value.includes(filterValue)) {
-    selectedIPK.value = selectedIPK.value.filter(item => item !== filterValue)
-  } else if (filterValue.startsWith('Periode:')) {
-    // Clear date range filter
+  }
+
+  // Handle IPK filters
+  if (filterLabel.startsWith('IPK ')) {
+    const ipkLabel = filterLabel.replace('IPK ', '')
+    const ipkOption = ipkOptions.find(opt => opt.label === ipkLabel)
+    if (ipkOption) {
+      selectedIPK.value = selectedIPK.value.filter(
+        item => item !== ipkOption.value,
+      )
+    }
+  }
+
+  // Handle periode filter
+  if (filterLabel.startsWith('Periode:')) {
     selectedPeriode.value = ''
   }
+
   // Reset to first page when filter changes
   currentPage.value = 1
 }
@@ -437,16 +530,45 @@ const formatDateDisplay = dateString => {
 
 const activeFilters = computed(() => {
   const filters = []
-  if (selectedInternal.value.length > 0) filters.push(...selectedInternal.value)
-  if (selectedEksternal.value.length > 0)
-    filters.push(...selectedEksternal.value)
-  if (selectedAngkatan.value.length > 0) filters.push(...selectedAngkatan.value)
-  if (selectedIPK.value.length > 0) filters.push(...selectedIPK.value)
+
+  // Map internal filter values to readable labels
+  if (selectedInternal.value.length > 0) {
+    selectedInternal.value.forEach(value => {
+      const option = internalOptions.find(opt => opt.value === value)
+      if (option) filters.push(option.label)
+    })
+  }
+
+  // Map external filter values to readable labels
+  if (selectedEksternal.value.length > 0) {
+    selectedEksternal.value.forEach(value => {
+      const option = eksternalOptions.find(opt => opt.value === value)
+      if (option) filters.push(option.label)
+    })
+  }
+
+  // Add angkatan filters
+  if (selectedAngkatan.value.length > 0) {
+    selectedAngkatan.value.forEach(value => {
+      filters.push(`Angkatan ${value}`)
+    })
+  }
+
+  // Map IPK filter values to readable labels
+  if (selectedIPK.value.length > 0) {
+    selectedIPK.value.forEach(value => {
+      const option = ipkOptions.find(opt => opt.value === value)
+      if (option) filters.push(`IPK ${option.label}`)
+    })
+  }
+
+  // Add periode filter
   if (selectedPeriode.value) {
     const [startDate, endDate] = selectedPeriode.value.split('_')
     const dateDisplay = `${formatDateDisplay(startDate)} - ${formatDateDisplay(endDate)}`
     filters.push(`Periode: ${dateDisplay}`)
   }
+
   return filters
 })
 </script>
