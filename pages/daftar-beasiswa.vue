@@ -118,13 +118,17 @@
                   class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800"
                 >
                   {{ filter }}
-                  <button class="rounded-full p-0.5 hover:bg-blue-200">
+                  <button
+                    @click="removeFilter(filter)"
+                    class="rounded-full p-0.5 transition-colors hover:bg-blue-200"
+                  >
                     <UIcon name="i-heroicons-x-mark" class="h-3 w-3" />
                   </button>
                 </span>
                 <button
                   v-if="activeFilters.length > 0"
-                  class="text-sm text-red-600 hover:underline"
+                  @click="clearAllFilters"
+                  class="text-sm text-red-600 transition-colors hover:underline"
                 >
                   Hapus Semua
                 </button>
@@ -168,7 +172,7 @@
                     :max="totalPages"
                     :placeholder="currentPage.toString()"
                     :class="[
-                      'w-16 rounded px-2 py-1 text-center text-sm transition-colors text-black font-bold border-gray-50 border-1',
+                      'w-16 rounded border-1 border-gray-50 px-2 py-1 text-center text-sm font-bold text-black transition-colors',
                       inputError
                         ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
                         : 'border-gray-300 focus:border-transparent focus:ring-2 focus:ring-blue-500',
@@ -212,8 +216,8 @@ import { ref, computed } from 'vue'
 
 // Filter options
 const jenjangOptions = [
-  { label: 'Sarjana', value: 'sarjana' },
-  { label: 'Pasca Sarjana', value: 'pasca-sarjana' },
+  { label: 'Sarjana', value: 'Sarjana' },
+  { label: 'Pasca Sarjana', value: 'Pasca Sarjana' },
 ]
 
 const internalOptions = [
@@ -247,7 +251,7 @@ const ipkOptions = [
 
 // Reactive filter states
 const searchQuery = ref('')
-const selectedJenjang = ref('sarjana')
+const selectedJenjang = ref('Sarjana')
 const selectedInternal = ref([])
 const selectedEksternal = ref(['kerja-sama', 'non-pemerintah'])
 const selectedAngkatan = ref(['2024', '2023'])
@@ -411,6 +415,37 @@ const handlePageInput = () => {
       pageInput.value = ''
     }, 2000)
   }
+}
+
+// Filter removal functions
+const removeFilter = filterValue => {
+  // Check which filter array contains this value and remove it
+  if (selectedInternal.value.includes(filterValue)) {
+    selectedInternal.value = selectedInternal.value.filter(
+      item => item !== filterValue,
+    )
+  } else if (selectedEksternal.value.includes(filterValue)) {
+    selectedEksternal.value = selectedEksternal.value.filter(
+      item => item !== filterValue,
+    )
+  } else if (selectedAngkatan.value.includes(filterValue)) {
+    selectedAngkatan.value = selectedAngkatan.value.filter(
+      item => item !== filterValue,
+    )
+  } else if (selectedIPK.value.includes(filterValue)) {
+    selectedIPK.value = selectedIPK.value.filter(item => item !== filterValue)
+  }
+  // Reset to first page when filter changes
+  currentPage.value = 1
+}
+
+const clearAllFilters = () => {
+  selectedInternal.value = []
+  selectedEksternal.value = []
+  selectedAngkatan.value = []
+  selectedIPK.value = []
+  // Reset to first page when filters are cleared
+  currentPage.value = 1
 }
 
 const activeFilters = computed(() => {
