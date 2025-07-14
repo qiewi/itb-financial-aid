@@ -232,7 +232,7 @@ import DotFilter from '~/components/Filters/DotFilter.vue'
 import BoxFilter from '~/components/Filters/BoxFilter.vue'
 import PeriodeFilter from '~/components/Filters/PeriodeFilter.vue'
 import ScholarshipDetail from '~/components/Cards/ScholarshipDetail.vue'
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 
 // Filter options
 const jenjangOptions = [
@@ -477,7 +477,17 @@ const scholarships = ref([
 // Computed properties
 const filteredScholarships = computed(() => {
   return scholarships.value.filter(scholarship => {
-    // Add filtering logic here based on selected filters
+    // Search filter - check if title contains search query (case insensitive)
+    if (searchQuery.value) {
+      const query = searchQuery.value.toLowerCase().trim()
+      const title = scholarship.title.toLowerCase()
+      if (!title.includes(query)) {
+        return false
+      }
+    }
+
+    // Add other filtering logic here based on selected filters
+    // For now, return true for all other filters
     return true
   })
 })
@@ -593,6 +603,12 @@ const handleSortClickOutside = event => {
     showSortDropdown.value = false
   }
 }
+
+// Watchers
+watch(searchQuery, () => {
+  // Reset to first page when search query changes
+  currentPage.value = 1
+})
 
 // Lifecycle hooks
 onMounted(() => {
