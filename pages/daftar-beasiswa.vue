@@ -84,12 +84,12 @@
                     v-model="searchQuery"
                     type="text"
                     placeholder="Cari Beasiswa Sarjana"
-                    class="w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-3xl border border-gray-300 py-2 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <!-- Sort Button -->
                 <button
-                  class="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 whitespace-nowrap hover:bg-gray-50"
+                  class="flex items-center gap-2 rounded-3xl border border-gray-300 px-4 py-2 whitespace-nowrap hover:bg-gray-50"
                 >
                   <UIcon name="i-heroicons-funnel" class="h-4 w-4" />
                   Urutkan Berdasarkan
@@ -98,7 +98,13 @@
 
               <!-- Results Count -->
               <p class="mb-4 text-gray-600">
-                Menampilkan {{ filteredScholarships.length }} beasiswa untuk
+                Menampilkan {{ (currentPage - 1) * itemsPerPage + 1 }}-{{
+                  Math.min(
+                    currentPage * itemsPerPage,
+                    filteredScholarships.length,
+                  )
+                }}
+                dari {{ filteredScholarships.length }} beasiswa untuk
                 <span class="font-medium text-blue-600">{{
                   selectedJenjang || 'Semua Jenjang'
                 }}</span>
@@ -135,16 +141,58 @@
             </div>
 
             <!-- Pagination -->
-            <div class="mt-8 flex items-center justify-center gap-2">
-              <button class="rounded-full bg-gray-200 p-2 hover:bg-gray-300">
+            <div class="mt-8 flex items-center justify-center gap-4">
+              <!-- Previous Button -->
+              <button
+                @click="previousPage"
+                :disabled="currentPage === 1"
+                :class="[
+                  'rounded-full px-3 py-2 transition-colors',
+                  currentPage === 1
+                    ? 'cursor-not-allowed bg-gray-200 text-gray-400'
+                    : 'bg-[var(--button-color)] text-white hover:bg-[var(--button-color)]/90',
+                ]"
+              >
                 <UIcon name="i-heroicons-chevron-left" class="h-4 w-4" />
               </button>
-              <button class="rounded bg-blue-500 px-3 py-1 text-white">
-                1
-              </button>
-              <span class="text-gray-500">dari 10</span>
+
+              <!-- Page Info and Input -->
+              <div class="flex flex-col items-center gap-1">
+                <div class="flex items-center gap-2">
+                  <input
+                    v-model="pageInput"
+                    @keyup.enter="handlePageInput"
+                    @blur="handlePageInput"
+                    type="number"
+                    :min="1"
+                    :max="totalPages"
+                    :placeholder="currentPage.toString()"
+                    :class="[
+                      'w-16 rounded px-2 py-1 text-center text-sm transition-colors text-black font-bold border-gray-50 border-1',
+                      inputError
+                        ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                        : 'border-gray-300 focus:border-transparent focus:ring-2 focus:ring-blue-500',
+                    ]"
+                  />
+                  <span class="text-sm text-gray-600"
+                    >dari {{ totalPages }}</span
+                  >
+                </div>
+                <span v-if="inputError" class="text-xs text-red-500">
+                  Halaman 1-{{ totalPages }} saja
+                </span>
+              </div>
+
+              <!-- Next Button -->
               <button
-                class="rounded-full bg-blue-500 p-2 text-white hover:bg-blue-600"
+                @click="nextPage"
+                :disabled="currentPage === totalPages"
+                :class="[
+                  'rounded-full px-3 py-2 transition-colors',
+                  currentPage === totalPages
+                    ? 'cursor-not-allowed bg-gray-200 text-gray-400'
+                    : 'bg-[var(--button-color)] text-white hover:bg-[var(--button-color)]/90',
+                ]"
               >
                 <UIcon name="i-heroicons-chevron-right" class="h-4 w-4" />
               </button>
@@ -206,6 +254,12 @@ const selectedAngkatan = ref(['2024', '2023'])
 const selectedPeriode = ref('')
 const selectedIPK = ref(['1-2'])
 
+// Pagination states
+const currentPage = ref(1)
+const itemsPerPage = ref(3)
+const pageInput = ref('')
+const inputError = ref(false)
+
 // Sample scholarship data
 const scholarships = ref([
   {
@@ -240,6 +294,70 @@ const scholarships = ref([
       'Lihat 7 Benefit Lainnya',
     ],
   },
+  {
+    id: 3,
+    title: 'Beasiswa Badjatex Tahun 2024',
+    provider: 'PT Badjatex',
+    type: 'Kerja Sama',
+    level: 'Sarjana',
+    status: 'Pendaftaran Dibuka',
+    registrationPeriod: '15 Juni-30 Juni 2024',
+    quota: '15 Orang',
+    benefits: [
+      'Biaya Pendidikan',
+      'Tunjangan Bulanan',
+      'Asuransi Kesehatan',
+      'Lihat 5 Benefit Lainnya',
+    ],
+  },
+  {
+    id: 4,
+    title: 'Beasiswa LPDP 2024',
+    provider: 'Lembaga Pengelola Dana Pendidikan',
+    type: 'LPDP',
+    level: 'Pasca Sarjana',
+    status: 'Pendaftaran Dibuka',
+    registrationPeriod: '1 Juli-31 Juli 2024',
+    quota: '100 Orang',
+    benefits: [
+      'Biaya Kuliah Penuh',
+      'Biaya Hidup',
+      'Tiket Pesawat',
+      'Lihat 10 Benefit Lainnya',
+    ],
+  },
+  {
+    id: 5,
+    title: 'Beasiswa KIP Kuliah 2024',
+    provider: 'Kementerian Pendidikan',
+    type: 'KIPK',
+    level: 'Sarjana',
+    status: 'Ditutup',
+    registrationPeriod: '1 Maret-30 April 2024',
+    quota: '200 Orang',
+    benefits: [
+      'Bantuan UKT',
+      'Biaya Hidup Bulanan',
+      'Buku dan Alat Tulis',
+      'Lihat 6 Benefit Lainnya',
+    ],
+  },
+  {
+    id: 6,
+    title: 'Beasiswa BCA Finance',
+    provider: 'PT BCA Finance',
+    type: 'Non Pemerintah',
+    level: 'Sarjana',
+    status: 'Segera Berakhir',
+    registrationPeriod: '10 Juni-20 Juni 2024',
+    quota: '25 Orang',
+    benefits: [
+      'Bantuan Biaya Kuliah',
+      'Program Magang',
+      'Mentoring Karir',
+      'Lihat 4 Benefit Lainnya',
+    ],
+  },
 ])
 
 // Computed properties
@@ -250,9 +368,50 @@ const filteredScholarships = computed(() => {
   })
 })
 
-const paginatedScholarships = computed(() => {
-  return filteredScholarships.value.slice(0, 10)
+const totalPages = computed(() => {
+  return Math.ceil(filteredScholarships.value.length / itemsPerPage.value)
 })
+
+const paginatedScholarships = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return filteredScholarships.value.slice(start, end)
+})
+
+// Pagination functions
+const goToPage = page => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
+}
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
+}
+
+const handlePageInput = () => {
+  const page = parseInt(pageInput.value)
+  if (!isNaN(page) && page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+    pageInput.value = ''
+    inputError.value = false
+  } else if (pageInput.value !== '') {
+    // Show validation feedback for out of range values
+    inputError.value = true
+    setTimeout(() => {
+      inputError.value = false
+      pageInput.value = ''
+    }, 2000)
+  }
+}
 
 const activeFilters = computed(() => {
   const filters = []
