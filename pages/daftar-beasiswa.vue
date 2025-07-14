@@ -340,8 +340,10 @@ const filteredScholarships = computed(() => {
 
 // Enhanced scholarships with sorting (formatting handled by CardsScholarshipDetail component)
 const enhancedScholarships = computed(() => {
-  // Sort scholarships
-  return filteredScholarships.value.sort((a, b) => {
+  // Create a copy of filtered scholarships and then sort
+  const scholarshipsToSort = [...filteredScholarships.value]
+
+  return scholarshipsToSort.sort((a, b) => {
     let compareValue = 0
 
     if (sortBy.value === 'endDate') {
