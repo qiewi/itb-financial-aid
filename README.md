@@ -1,5 +1,7 @@
 # ITB Financial Aid System
 
+https://github.com/user-attachments/assets/f555650c-17cc-4ca9-be5f-d96401eab8cf
+
 A modern, responsive scholarship and financial aid management system for **Institut Teknologi Bandung (ITB)**. Built with **Nuxt 3** and **Vue.js 3**, featuring **dynamic filtering**, **multi-language support**, and **comprehensive scholarship management**.
 
 ## 🌟 Features
