@@ -13,8 +13,8 @@
             :name="title"
             :value="option.value"
             :checked="selectedValue === option.value"
-            @change="handleChange(option.value)"
             class="sr-only"
+            @change="handleChange(option.value)"
           />
           <div
             :class="[
@@ -42,9 +42,18 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  title: String,
-  options: Array,
-  modelValue: String,
+  title: {
+    type: String,
+    default: '',
+  },
+  options: {
+    type: Array,
+    default: () => [],
+  },
+  modelValue: {
+    type: String,
+    default: '',
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])

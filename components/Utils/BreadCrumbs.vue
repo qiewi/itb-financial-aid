@@ -17,69 +17,69 @@
   </ul>
 </template>
 
-<script>
-export default {
-  name: 'BreadCrumbs',
-  props: {
-    removeIndexes: {
-      type: Array,
-      default: () => [],
-      // :remove-indexes=
-      // "[ index1, index2, ... ]"
-    },
-    removeUrl: {
-      type: Array,
-      default: () => [],
-      // :remove-url=
-      // "[ index1, index2, ... ]"
-    },
-    customTitles: {
-      type: Array,
-      default: () => [],
-      // :custom-titles=
-      // "[{ index: ..., newVal: ... }, {...}]"
-    },
-    formatUrlEncode: {
-      type: Boolean,
-      default: false,
-    },
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  removeIndexes: {
+    type: Array,
+    default: () => [],
+    // :remove-indexes=
+    // "[ index1, index2, ... ]"
   },
-  computed: {
-    crumbs() {
-      const newItems = []
-      const pathsItem = []
-      const fullPath = this.$route.path
-      const items = fullPath.split('/')
+  removeUrl: {
+    type: Array,
+    default: () => [],
+    // :remove-url=
+    // "[ index1, index2, ... ]"
+  },
+  customTitles: {
+    type: Array,
+    default: () => [],
+    // :custom-titles=
+    // "[{ index: ..., newVal: ... }, {...}]"
+  },
+  formatUrlEncode: {
+    type: Boolean,
+    default: false,
+  },
+})
 
-      items.shift()
+const route = useRoute()
 
-      items.forEach((b, i) => {
-        if (!this.removeIndexes.includes(i)) {
-          newItems.push(b)
-          b = b.split('-').join(' ')
+const crumbs = computed(() => {
+  const newItems = []
+  const pathsItem = []
+  const fullPath = route.path
+  const items = fullPath.split('/')
 
-          const url = newItems.slice(0, i + 1).toString()
+  items.shift()
 
-          // Custom Title
-          const customTitle =
-            this.customTitles?.find(item => item.index === i) || null
-          if (customTitle) b = customTitle?.newVal || b
+  items.forEach((b, i) => {
+    if (!props.removeIndexes.includes(i)) {
+      newItems.push(b)
+      b = b.split('-').join(' ')
 
-          pathsItem.push({
-            title: b,
-            url: this.removeUrl.includes(i)
-              ? null
-              : '/' + url.split(',').join('/'),
-          })
-        }
+      const url = newItems.slice(0, i + 1).toString()
+
+      // Custom Title
+      const customTitle =
+        props.customTitles?.find(item => item.index === i) || null
+      if (customTitle) b = customTitle?.newVal || b
+
+      pathsItem.push({
+        title: b,
+        url: props.removeUrl.includes(i)
+          ? null
+          : '/' + url.split(',').join('/'),
       })
+    }
+  })
 
-      // Remove Locale from breadcrumbs
-      pathsItem.shift()
-      return pathsItem
-    },
-  },
-}
+  // Remove Locale from breadcrumbs
+  pathsItem.shift()
+  return pathsItem
+})
 </script>
 
 <style scoped>

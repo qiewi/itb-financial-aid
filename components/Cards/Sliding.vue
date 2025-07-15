@@ -59,7 +59,6 @@
           <!-- Navigation Controls -->
           <div class="mt-4 flex items-center gap-4">
             <button
-              @click="previousStory"
               class="rounded-full p-3 pb-2 shadow-lg transition-all"
               :class="{
                 'cursor-not-allowed bg-gray-400 opacity-50':
@@ -67,12 +66,12 @@
                 'btn-button-color': currentStoryIndex !== 0,
               }"
               :disabled="currentStoryIndex === 0"
+              @click="previousStory"
             >
               <UIcon name="i-heroicons-arrow-left" class="h-5 w-5 text-white" />
             </button>
 
             <button
-              @click="nextStory"
               class="rounded-full p-3 pb-2 shadow-lg transition-all"
               :class="{
                 'cursor-not-allowed bg-gray-400 opacity-50':
@@ -80,6 +79,7 @@
                 'btn-button-color': currentStoryIndex !== stories.length - 1,
               }"
               :disabled="currentStoryIndex === stories.length - 1"
+              @click="nextStory"
             >
               <UIcon
                 name="i-heroicons-arrow-right"

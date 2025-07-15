@@ -25,7 +25,6 @@ const clearKeyword = () => {
 const search = () => {
   if (!allowedToSearch.value) return false
 
-  console.log('run Search ' + keyword.value)
   router.push({
     path: `/search`,
     query: { keyword: keyword.value, page: 1 },

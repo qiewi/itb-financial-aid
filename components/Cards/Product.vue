@@ -63,7 +63,6 @@
 
 <script setup>
 // const dayjs = useDayjs()
-import { useDateFormat } from '@vueuse/core'
 // const { locale } = useI18n()
 
 const props = defineProps({
@@ -78,13 +77,6 @@ const props = defineProps({
 })
 
 // console.log({ items: props.items, path: props.path })
-
-const formatedDate = date => {
-  return useDateFormat(date, 'MMMM DD, YYYY')
-}
-// const formatedDate = date => {
-//   return dayjs(date).locale(locale.value).format('MMM DD, YYYY')
-// }
 function handleError(e) {
   // e.target?.setAttribute('data-error', '1')
   // e.target?.setAttribute('src', 'https://placeholde.co/400x300')
@@ -94,7 +86,6 @@ function handleError(e) {
 }
 
 const price = (val, percent) => {
-  console.log({ val, percent })
   if (percent > 0) {
     return (val - (val * percent) / 100).toLocaleString('id-ID')
   }

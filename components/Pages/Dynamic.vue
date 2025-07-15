@@ -81,15 +81,17 @@ const { data: pageData } = await useFetch(`/api/app/pages/${props.slugs}`)
 
 // console.log({ pageDataError: pageData.value })
 
-if (pageData.value?.error !== undefined) {
-  const err = pageData.value.error
-  console.log({ err })
-  // throw createError({
-  //   fatal: true,
-  //   statusCode: err.status,
-  //   statusMessage: err.message,
-  // })
-}
+// if (pageData.value?.error !== undefined) {
+//   // throw createError({
+//   //   fatal: true,
+//   //   statusCode: pageData.value.error.status,
+//   //   statusMessage: pageData.value.error.message,
+//   // })
+
+
+
+
+// }
 
 const seoData = pageData.value?.data
 

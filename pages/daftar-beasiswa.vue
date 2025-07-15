@@ -12,9 +12,9 @@
             <!-- Jenjang Filter (Dot Filter) -->
             <div class="mb-6">
               <FiltersDotFilter
+                v-model="selectedJenjang"
                 title="Jenjang"
                 :options="jenjangOptions"
-                v-model="selectedJenjang"
               />
             </div>
 
@@ -24,18 +24,18 @@
               <!-- Internal Filter -->
               <div class="mb-4">
                 <FiltersBoxFilter
+                  v-model="selectedInternal"
                   title="Internal"
                   :options="internalOptions"
-                  v-model="selectedInternal"
                 />
               </div>
 
               <!-- Eksternal Filter -->
               <div class="mb-4">
                 <FiltersBoxFilter
+                  v-model="selectedEksternal"
                   title="Eksternal"
                   :options="eksternalOptions"
-                  v-model="selectedEksternal"
                 />
               </div>
             </div>
@@ -43,9 +43,9 @@
             <!-- Angkatan Filter -->
             <div class="mb-6">
               <FiltersBoxFilter
+                v-model="selectedAngkatan"
                 title="Angkatan"
                 :options="angkatanOptions"
-                v-model="selectedAngkatan"
               />
             </div>
 
@@ -55,9 +55,9 @@
             <!-- IPK Filter -->
             <div class="mb-6">
               <FiltersBoxFilter
+                v-model="selectedIPK"
                 title="IPK"
                 :options="ipkOptions"
-                v-model="selectedIPK"
               />
             </div>
           </div>
@@ -83,8 +83,8 @@
                 <!-- Sort Button -->
                 <div class="relative">
                   <button
-                    @click="showSortDropdown = !showSortDropdown"
                     class="flex items-center gap-2 rounded-3xl border border-gray-300 px-4 py-2 whitespace-nowrap text-gray-500 hover:bg-gray-50"
+                    @click="showSortDropdown = !showSortDropdown"
                   >
                     <UIcon name="i-heroicons-funnel" class="h-4 w-4" />
                     {{ currentSortLabel }}
@@ -100,13 +100,13 @@
                       <button
                         v-for="option in sortOptions"
                         :key="`${option.value}-${option.order}`"
-                        @click="setSortOption(option)"
                         :class="[
                           'w-full px-4 py-2 text-left text-sm hover:bg-gray-50',
                           option.value === sortBy && option.order === sortOrder
                             ? 'bg-blue-50 font-medium text-blue-600'
                             : 'text-gray-700',
                         ]"
+                        @click="setSortOption(option)"
                       >
                         {{ option.label }}
                       </button>
@@ -138,16 +138,16 @@
                 >
                   {{ filter }}
                   <button
-                    @click="removeFilter(filter)"
                     class="rounded-full p-0.5 transition-colors hover:bg-blue-200"
+                    @click="removeFilter(filter)"
                   >
                     <UIcon name="i-heroicons-x-mark" class="h-3 w-3" />
                   </button>
                 </span>
                 <button
                   v-if="activeFilters.length > 0"
-                  @click="clearAllFilters"
                   class="text-sm text-red-600 transition-colors hover:underline"
+                  @click="clearAllFilters"
                 >
                   Hapus Semua
                 </button>
@@ -167,7 +167,6 @@
             <div class="mt-8 flex items-center justify-center gap-4">
               <!-- Previous Button -->
               <button
-                @click="previousPage"
                 :disabled="currentPage === 1"
                 :class="[
                   'rounded-full px-3 py-2 transition-colors',
@@ -175,6 +174,7 @@
                     ? 'cursor-not-allowed bg-gray-200 text-gray-400'
                     : 'bg-[var(--button-color)] text-white hover:bg-[var(--button-color)]/90',
                 ]"
+                @click="previousPage"
               >
                 <UIcon name="i-heroicons-chevron-left" class="h-4 w-4" />
               </button>
@@ -184,8 +184,6 @@
                 <div class="flex items-center gap-2">
                   <input
                     v-model="pageInput"
-                    @keyup.enter="handlePageInput"
-                    @blur="handlePageInput"
                     type="number"
                     :min="1"
                     :max="totalPages"
@@ -196,6 +194,8 @@
                         ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
                         : 'border-gray-300 focus:border-transparent focus:ring-2 focus:ring-blue-500',
                     ]"
+                    @keyup.enter="handlePageInput"
+                    @blur="handlePageInput"
                   />
                   <span class="text-sm text-gray-600"
                     >dari {{ totalPages }}</span
@@ -208,7 +208,6 @@
 
               <!-- Next Button -->
               <button
-                @click="nextPage"
                 :disabled="currentPage === totalPages"
                 :class="[
                   'rounded-full px-3 py-2 transition-colors',
@@ -216,6 +215,7 @@
                     ? 'cursor-not-allowed bg-gray-200 text-gray-400'
                     : 'bg-[var(--button-color)] text-white hover:bg-[var(--button-color)]/90',
                 ]"
+                @click="nextPage"
               >
                 <UIcon name="i-heroicons-chevron-right" class="h-4 w-4" />
               </button>
@@ -373,12 +373,6 @@ const paginatedScholarships = computed(() => {
 })
 
 // Pagination functions
-const goToPage = page => {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
-  }
-}
-
 const previousPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--

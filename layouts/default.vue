@@ -48,12 +48,6 @@ useHead(() => ({
 // useHead({
 // })
 
-const queryMenus = {
-  sort: 'Order',
-  // 'populate[Page][populate]': '*',
-  // 'populate[Child][populate]': '*',
-}
-
 // DISABLED: API fetching - components now use fallback data for SSR safety
 // This prevents SSR errors while maintaining functionality
 //

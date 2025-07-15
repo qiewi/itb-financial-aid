@@ -62,13 +62,23 @@ import { onMounted } from 'vue'
 
 import { useThemeStore } from '~/store/global'
 
+const { locale } = useI18n()
+const localePath = useLocalePath()
+
+// Authentication (mock for development)
+const loggedIn = ref(false)
+const signOut = () => {
+  loggedIn.value = false
+  // Add actual logout logic here
+}
+
 const theme = useThemeStore()
 
 const showMenu = ref(false)
 
 const el = ref(null)
 
-const menus = await useFetchMenus()
+const menus = useFetchMenus()
 
 onMounted(() => {
   el.value = document.getElementById('navbar-default')

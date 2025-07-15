@@ -1,8 +1,8 @@
 <template>
   <div class="mb-6">
     <button
-      @click="isExpanded = !isExpanded"
       class="flex w-full items-center justify-between text-sm font-medium text-gray-900 lg:text-base"
+      @click="isExpanded = !isExpanded"
     >
       {{ title }}
       <UIcon
@@ -15,8 +15,8 @@
     <div v-show="isExpanded" class="mt-3">
       <div class="date-picker-container relative">
         <button
-          @click="showDatePicker = !showDatePicker"
           class="flex w-full items-center justify-between rounded-lg border border-gray-300 px-3 py-2 transition-colors hover:border-gray-400 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+          @click="showDatePicker = !showDatePicker"
         >
           <span class="text-sm text-gray-700">
             {{ dateRangeDisplay || 'Pilih rentang tanggal' }}
@@ -30,8 +30,8 @@
         <!-- Date Picker Dropdown -->
         <div
           v-if="showDatePicker"
-          @click.stop
           class="absolute top-full left-0 z-50 mt-1 w-full rounded-lg border border-gray-200 bg-white p-4 shadow-lg"
+          @click.stop
         >
           <div class="grid grid-cols-1 gap-4">
             <div>
@@ -57,14 +57,14 @@
             </div>
             <div class="flex gap-2 pt-2">
               <button
-                @click="applyDateRange"
                 class="flex-1 rounded bg-[var(--button-color)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--button-color)]/90"
+                @click="applyDateRange"
               >
                 Terapkan
               </button>
               <button
-                @click="clearDateRange"
                 class="flex-1 rounded border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                @click="clearDateRange"
               >
                 Hapus
               </button>

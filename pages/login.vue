@@ -83,8 +83,7 @@ const redirectTo = computed(() => {
 
 // Auto-redirect immediately to bypass login
 onMounted(() => {
-  // Immediate redirect to /home 
-  console.log('Login page: redirecting to', redirectTo.value)
+  // Immediate redirect to /home
   navigateTo(redirectTo.value, { replace: true })
 })
 

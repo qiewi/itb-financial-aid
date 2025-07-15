@@ -1,123 +1,123 @@
 export default [
   {
     title: 'Tentang Kami',
-    slug: '/tentang-kami',
+    url: '/tentang-kami',
     children: [],
   },
   {
     title: 'Event',
-    slug: '/event',
+    url: '/event',
     children: [],
   },
   {
     title: 'Komponen',
-    slug: '/komponen',
+    url: '/komponen',
     children: [
       {
         title: 'Warna',
-        slug: '/warna',
+        url: '/warna',
         children: [],
       },
       {
         title: 'Button',
-        slug: '/button',
+        url: '/button',
         children: [],
       },
       {
         title: 'Form',
-        slug: '/form',
+        url: '/form',
         children: [],
       },
       {
         title: 'Flash notif',
-        slug: '/flash-notif',
+        url: '/flash-notif',
         children: [],
       },
       {
         title: 'Card',
-        slug: '/card',
+        url: '/card',
         children: [],
       },
       {
         title: 'Tab',
-        slug: '/tab',
+        url: '/tab',
         children: [],
       },
       {
         title: 'Akordion',
-        slug: '/akordion',
+        url: '/akordion',
         children: [],
       },
       {
         title: 'Bintang',
-        slug: '/bintang',
+        url: '/bintang',
         children: [],
       },
       {
         title: 'Tabel',
-        slug: '/tabel',
+        url: '/tabel',
         children: [],
       },
       {
         title: 'Chart',
-        slug: '/chart',
+        url: '/chart',
         children: [],
       },
       {
         title: 'Lainnya',
-        slug: '/lainnya',
+        url: '/lainnya',
         children: [],
       },
     ],
   },
   {
     title: 'Block',
-    slug: '/block',
+    url: '/block',
     children: [
       {
         title: 'Hero',
-        slug: '/hero',
+        url: '/hero',
         children: [
           {
             title: 'Hero Children',
-            slug: '/children',
+            url: '/children',
             children: [],
           },
         ],
       },
       {
         title: 'Blog',
-        slug: '/blog',
+        url: '/blog',
         children: [],
       },
       {
         title: 'Koleksi',
-        slug: '/koleksi',
+        url: '/koleksi',
         children: [],
       },
       {
         title: 'Testimoni',
-        slug: '/testimoni',
+        url: '/testimoni',
         children: [],
       },
       {
         title: 'Pricing & Plans',
-        slug: '/pricing',
+        url: '/pricing',
         children: [],
       },
       {
         title: 'Footer',
-        slug: '/footer',
+        url: '/footer',
         children: [],
       },
       {
         title: '404',
-        slug: '/404',
+        url: '/404',
         children: [],
       },
       {
         title: '3D Viewer',
-        slug: '/3d-viewer',
+        url: '/3d-viewer',
         children: [],
       },
     ],

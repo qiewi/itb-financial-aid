@@ -22,9 +22,5 @@ const params = route.params
 const newsEvents = params.newsEvents
 const categories = params.categories
 
-console.log({ newsEvents, categories })
-
 const { data: menus } = await useFetch('/api/' + categories)
-
-console.log({ menus })
 </script>

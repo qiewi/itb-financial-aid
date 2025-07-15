@@ -25,10 +25,7 @@ function renderImage(img) {
   return img ? img.url : '/icon.png'
 }
 
-console.log({ error })
-
 if (error.value) {
-  console.log({ error: error.value })
   const errValue = error.value
   throw createError({
     fatal: true,

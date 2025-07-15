@@ -1,123 +1,123 @@
 export default [
   {
     title: 'About Us',
-    slug: '/about-us',
+    url: '/about-us',
     children: [],
   },
   {
     title: 'Events',
-    slug: '/events',
+    url: '/events',
     children: [],
   },
   {
     title: 'Components',
-    slug: '/components',
+    url: '/components',
     children: [
       {
         title: 'Colors',
-        slug: '/colors',
+        url: '/colors',
         children: [],
       },
       {
         title: 'Buttons',
-        slug: '/buttons',
+        url: '/buttons',
         children: [],
       },
       {
         title: 'Forms',
-        slug: '/forms',
+        url: '/forms',
         children: [],
       },
       {
         title: 'Flash notif',
-        slug: '/flash-notif',
+        url: '/flash-notif',
         children: [],
       },
       {
         title: 'Cards',
-        slug: '/cards',
+        url: '/cards',
         children: [],
       },
       {
         title: 'Tabs',
-        slug: '/tabs',
+        url: '/tabs',
         children: [],
       },
       {
         title: 'Accordion',
-        slug: '/accordion',
+        url: '/accordion',
         children: [],
       },
       {
         title: 'Rating',
-        slug: '/rating',
+        url: '/rating',
         children: [],
       },
       {
         title: 'Table',
-        slug: '/table',
+        url: '/table',
         children: [],
       },
       {
         title: 'Chart',
-        slug: '/chart',
+        url: '/chart',
         children: [],
       },
       {
         title: 'Other',
-        slug: '/other',
+        url: '/other',
         children: [],
       },
     ],
   },
   {
     title: 'Blocks',
-    slug: '/blocks',
+    url: '/blocks',
     children: [
       {
         title: 'Hero',
-        slug: '/heroes',
+        url: '/heroes',
         children: [
           {
             title: 'Hero Children',
-            slug: '/children',
+            url: '/children',
             children: [],
           },
         ],
       },
       {
         title: 'Blog',
-        slug: '/blog',
+        url: '/blog',
         children: [],
       },
       {
         title: '3D Viewer',
-        slug: '/3d-viewer',
+        url: '/3d-viewer',
         children: [],
       },
       {
         title: 'Collections',
-        slug: '/collections',
+        url: '/collections',
         children: [],
       },
       {
         title: 'Testimonials',
-        slug: '/testimonials',
+        url: '/testimonials',
         children: [],
       },
       {
         title: 'Pricing & Plans',
-        slug: '/pricing',
+        url: '/pricing',
         children: [],
       },
       {
         title: 'Footer',
-        slug: '/footer',
+        url: '/footer',
         children: [],
       },
       {
         title: '404',
-        slug: '/404',
+        url: '/404',
         children: [],
       },
     ],

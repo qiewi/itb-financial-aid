@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col gap-3">
     <button
-      @click="isExpanded = !isExpanded"
       class="flex items-center justify-between text-sm font-medium text-gray-900 lg:text-base"
+      @click="isExpanded = !isExpanded"
     >
       {{ title }}
       <UIcon
@@ -23,8 +23,8 @@
             type="checkbox"
             :value="option.value"
             :checked="selectedValues.includes(option.value)"
-            @change="handleChange(option.value)"
             class="sr-only"
+            @change="handleChange(option.value)"
           />
           <div
             :class="[
@@ -53,9 +53,18 @@
 import { ref, computed } from 'vue'
 
 const props = defineProps({
-  title: String,
-  options: Array,
-  modelValue: Array,
+  title: {
+    type: String,
+    default: '',
+  },
+  options: {
+    type: Array,
+    default: () => [],
+  },
+  modelValue: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])

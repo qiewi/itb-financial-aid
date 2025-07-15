@@ -68,8 +68,8 @@ const errorMessage = getErrorMessage(error.value?.statusCode)
 
           <!-- Back to Home Button -->
           <button
-            @click="handleError"
             class="inline-flex items-center rounded-full bg-[var(--button-color)] px-8 py-3 text-base font-medium text-white transition-colors hover:bg-[var(--button-color)]/90 focus:ring-2 focus:ring-[var(--button-color)] focus:ring-offset-2 focus:outline-none md:px-10 md:py-4 md:text-lg"
+            @click="handleError"
           >
             Kembali ke Beranda
           </button>
