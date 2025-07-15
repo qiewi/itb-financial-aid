@@ -5,7 +5,7 @@
       <label
         v-for="option in options"
         :key="option.value"
-        class="flex cursor-pointer items-center gap-2"
+        class="flex cursor-pointer items-center gap-2 py-1"
       >
         <div class="relative">
           <input

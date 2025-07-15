@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <button
-      class="flex items-center justify-between text-sm font-medium text-gray-900 lg:text-base"
+      class="flex items-center justify-between py-2 text-sm font-medium text-gray-900 lg:text-base"
       @click="isExpanded = !isExpanded"
     >
       {{ title }}
@@ -16,7 +16,7 @@
       <label
         v-for="option in options"
         :key="option.value"
-        class="flex cursor-pointer items-center gap-2"
+        class="flex cursor-pointer items-center gap-2 py-1"
       >
         <div class="relative">
           <input

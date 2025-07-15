@@ -33,16 +33,16 @@
         <!-- Title -->
         <div class="flex flex-col gap-3">
           <h3
-            class="text-lg leading-tight font-bold text-[#1a1a1a] sm:text-xl lg:text-2xl"
+            class="text-lg leading-tight font-bold text-[#1a1a1a] sm:text-xl lg:text-2xl pr-20"
           >
             {{ enhancedScholarship.title }}
           </h3>
         </div>
 
-        <!-- Two Column Layout -->
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <!-- Two Column Layout - Stack on mobile -->
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <!-- Left Column -->
-          <div class="space-y-6 border-r-2 border-gray-200">
+          <div class="space-y-4 lg:space-y-6 lg:border-r-2 lg:border-gray-200 lg:pr-6">
             <!-- Basic Info Grid -->
             <div class="flex items-center gap-3">
               <img
@@ -57,17 +57,17 @@
                 {{ enhancedScholarship.provider }}
               </a>
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div class="flex flex-row gap-2">
-                <div class="text-sm text-gray-500 lg:text-base">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex flex-col gap-1">
+                <div class="text-xs text-gray-500 lg:text-sm">
                   Jenis Beasiswa
                 </div>
                 <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
                   {{ enhancedScholarship.type }}
                 </div>
               </div>
-              <div class="flex flex-row gap-2">
-                <div class="text-sm text-gray-500 lg:text-base">
+              <div class="flex flex-col gap-1">
+                <div class="text-xs text-gray-500 lg:text-sm">
                   Jenjang Beasiswa
                 </div>
                 <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
@@ -78,23 +78,23 @@
 
             <!-- Benefits Section -->
             <div>
-              <h4 class="mb-4 text-sm font-bold text-[#1a1a1a] lg:text-base">
+              <h4 class="mb-3 text-sm font-bold text-[#1a1a1a] lg:text-base">
                 Benefit Beasiswa
               </h4>
-              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div class="grid grid-cols-2 gap-2">
                 <div
                   v-for="benefit in enhancedScholarship.benefits"
                   :key="benefit"
-                  class="flex items-center gap-2"
+                  class="flex items-start gap-2"
                 >
                   <img
                     src="/assets/img/check-icon.png"
                     alt="Check icon"
-                    class="h-6 w-6 flex-shrink-0"
-                    width="24"
-                    height="24"
+                    class="h-5 w-5 flex-shrink-0 mt-0.5"
+                    width="20"
+                    height="20"
                   />
-                  <span class="text-sm text-gray-600 lg:text-base">{{
+                  <span class="text-xs text-gray-600 lg:text-sm">{{
                     benefit
                   }}</span>
                 </div>
@@ -103,21 +103,23 @@
           </div>
 
           <!-- Right Column -->
-          <div class="space-y-6">
-            <div class="flex flex-col gap-2">
-              <div class="text-sm text-gray-500 lg:text-base">
-                Periode Pendaftaran
+          <div class="space-y-4 lg:space-y-6">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <div class="flex flex-col gap-1">
+                <div class="text-xs text-gray-500 lg:text-sm">
+                  Periode Pendaftaran
+                </div>
+                <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
+                  {{ enhancedScholarship.registrationPeriod }}
+                </div>
               </div>
-              <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
-                {{ enhancedScholarship.registrationPeriod }}
-              </div>
-            </div>
-            <div class="flex flex-col gap-2">
-              <div class="text-sm text-gray-500 lg:text-base">
-                Kuota Diterima
-              </div>
-              <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
-                {{ enhancedScholarship.quota }}
+              <div class="flex flex-col gap-1">
+                <div class="text-xs text-gray-500 lg:text-sm">
+                  Kuota Diterima
+                </div>
+                <div class="text-sm font-medium text-[#1a1a1a] lg:text-base">
+                  {{ enhancedScholarship.quota }}
+                </div>
               </div>
             </div>
             <!-- Additional Info or Actions -->

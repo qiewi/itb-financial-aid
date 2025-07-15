@@ -1,7 +1,7 @@
 <template>
   <div class="mb-6">
     <button
-      class="flex w-full items-center justify-between text-sm font-medium text-gray-900 lg:text-base"
+      class="flex w-full items-center justify-between py-2 text-sm font-medium text-gray-900 lg:text-base"
       @click="isExpanded = !isExpanded"
     >
       {{ title }}
@@ -15,15 +15,15 @@
     <div v-show="isExpanded" class="mt-3">
       <div class="date-picker-container relative">
         <button
-          class="flex w-full items-center justify-between rounded-lg border border-gray-300 px-3 py-2 transition-colors hover:border-gray-400 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+          class="flex w-full items-center justify-between rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:border-gray-400 focus:border-transparent focus:ring-2 focus:ring-blue-500"
           @click="showDatePicker = !showDatePicker"
         >
-          <span class="text-sm text-gray-700">
+          <span class="text-gray-700 truncate">
             {{ dateRangeDisplay || 'Pilih rentang tanggal' }}
           </span>
           <UIcon
             name="i-heroicons-calendar-days"
-            class="h-4 w-4 text-gray-400"
+            class="h-4 w-4 text-gray-400 flex-shrink-0 ml-2"
           />
         </button>
 
