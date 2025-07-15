@@ -78,7 +78,9 @@
     <TabsSwitch />
 
     <!-- Statistics Section -->
-    <section class="relative w-full overflow-hidden bg-white px-6 py-16">
+    <section
+      class="relative w-full overflow-hidden bg-white px-6 py-8 lg:py-16"
+    >
       <div class="mx-auto max-w-7xl">
         <!-- Background elements - adjusted to prevent overflow -->
         <div
@@ -210,7 +212,7 @@
     </section>
 
     <!-- Featured Scholarships Section -->
-    <section class="w-full bg-white px-6 py-16">
+    <section class="w-full bg-white px-6 py-8 lg:py-16">
       <div class="mx-auto max-w-7xl">
         <h2
           class="mx-auto mb-14 max-w-4xl text-center text-3xl font-bold text-[#1a1a1a] md:text-4xl"
@@ -309,7 +311,7 @@
     <CardsSliding />
 
     <!-- Announcements Section -->
-    <section class="w-full bg-white px-6 py-14">
+    <section class="w-full bg-white px-6 py-8 lg:py-14">
       <div class="mx-auto max-w-7xl">
         <h2
           class="mb-14 text-center text-3xl font-bold text-[#1a1a1a] lg:text-4xl"
@@ -338,10 +340,26 @@
     </section>
 
     <!-- Partners Section -->
-    <CarouselCarousel />
+    <section class="w-full bg-white px-6 py-8 lg:py-10">
+      <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col items-center gap-10">
+          <h2 class="text-center text-3xl font-bold text-[#1a1a1a] lg:text-4xl">
+            Mitra Pemberi Beasiswa
+          </h2>
+
+          <CarouselCarousel />
+
+          <button
+            class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg"
+          >
+            Lihat Selengkapnya
+          </button>
+        </div>
+      </div>
+    </section>
 
     <!-- FAQ Section -->
-    <section class="w-full bg-white px-6 py-12">
+    <section class="w-full bg-white px-6 py-6 lg:py-12">
       <div class="mx-auto max-w-7xl">
         <div class="flex flex-col items-center gap-10">
           <h2 class="text-center text-3xl font-bold text-[#1a1a1a] lg:text-4xl">

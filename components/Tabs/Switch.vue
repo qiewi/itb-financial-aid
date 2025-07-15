@@ -1,6 +1,6 @@
 <template>
   <!-- Scholarship Program Section -->
-  <section class="bg-white py-16">
+  <section class="bg-white py-8 lg:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- Section Title -->
       <div class="text-primary mb-12 text-center">
