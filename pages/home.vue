@@ -1,7 +1,9 @@
 <template>
   <main class="pt-[70px]">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden bg-gradient-to-l from-blue-50 to-white">
+    <section
+      class="relative overflow-hidden bg-gradient-to-l from-blue-50 to-white"
+    >
       <!-- Campus Background - Full Section -->
       <div class="absolute inset-0 z-0">
         <img
@@ -18,16 +20,23 @@
             <!-- Left Content -->
             <div class="max-w-xl space-y-8">
               <div class="space-y-4">
-                <h1 class="text-2xl leading-tight font-bold text-gray-900 md:text-3xl lg:text-4xl">
-                  Gapai Mimpi Besar Diri untuk Pendidikan Tinggi demi Masa Depan Penuh Prestasi
+                <h1
+                  class="text-2xl leading-tight font-bold text-gray-900 md:text-3xl lg:text-4xl"
+                >
+                  Gapai Mimpi Besar Diri untuk Pendidikan Tinggi demi Masa Depan
+                  Penuh Prestasi
                 </h1>
                 <p class="text-lg leading-relaxed text-gray-600">
-                  Setiap mahasiswa memiliki kemampuan finansial yang berbeda sehingga membutuhkan beasiswa. Berbagai dukungan pendanaan membantumu mewujudkan impian.
+                  Setiap mahasiswa memiliki kemampuan finansial yang berbeda
+                  sehingga membutuhkan beasiswa. Berbagai dukungan pendanaan
+                  membantumu mewujudkan impian.
                 </p>
               </div>
 
               <!-- CTA Buttons -->
-              <button class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg">
+              <button
+                class="btn-button-color rounded-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:shadow-lg"
+              >
                 Tentang FinAid
               </button>
             </div>
@@ -44,16 +53,24 @@
               </div>
 
               <!-- Decorative elements - adjusted for mobile -->
-              <div class="absolute -top-6 -right-6 z-5 h-24 w-24 rounded-full bg-[var(--button-color)] opacity-10 hidden sm:block"></div>
-              <div class="absolute -bottom-6 -left-6 z-5 h-32 w-32 rounded-full bg-blue-200 opacity-30 hidden sm:block"></div>
+              <div
+                class="absolute -top-6 -right-6 z-5 hidden h-24 w-24 rounded-full bg-[var(--button-color)] opacity-10 sm:block"
+              ></div>
+              <div
+                class="absolute -bottom-6 -left-6 z-5 hidden h-32 w-32 rounded-full bg-blue-200 opacity-30 sm:block"
+              ></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Background Pattern - hidden on mobile to prevent overflow -->
-      <div class="absolute top-0 right-0 z-5 h-full w-1/3 opacity-5 hidden lg:block">
-        <div class="h-full w-full bg-gradient-to-l from-[var(--button-color)] to-transparent"></div>
+      <div
+        class="absolute top-0 right-0 z-5 hidden h-full w-1/3 opacity-5 lg:block"
+      >
+        <div
+          class="h-full w-full bg-gradient-to-l from-[var(--button-color)] to-transparent"
+        ></div>
       </div>
     </section>
 
@@ -61,48 +78,81 @@
     <TabsSwitch />
 
     <!-- Statistics Section -->
-    <section class="relative w-full bg-white px-6 py-16 overflow-hidden">
+    <section class="relative w-full overflow-hidden bg-white px-6 py-16">
       <div class="mx-auto max-w-7xl">
         <!-- Background elements - adjusted to prevent overflow -->
-        <div class="absolute top-[143px] left-0 h-[332px] w-[200px] rotate-[-7.69deg] rounded-[164.64px/166.1px] bg-[linear-gradient(184deg,rgba(6,157,216,0.07)_0%,rgba(255,255,255,0)_100%)] hidden lg:block" />
-        <div class="absolute top-[-122px] right-0 h-[397px] w-[200px] rotate-[-77.80deg] rounded-[195.28px/198.58px] bg-[linear-gradient(121deg,rgba(6,157,216,0.07)_0%,rgba(255,255,255,0)_100%)] hidden lg:block" />
+        <div
+          class="absolute top-[143px] left-0 hidden h-[332px] w-[200px] rotate-[-7.69deg] rounded-[164.64px/166.1px] bg-[linear-gradient(184deg,rgba(6,157,216,0.07)_0%,rgba(255,255,255,0)_100%)] lg:block"
+        />
+        <div
+          class="absolute top-[-122px] right-0 hidden h-[397px] w-[200px] rotate-[-77.80deg] rounded-[195.28px/198.58px] bg-[linear-gradient(121deg,rgba(6,157,216,0.07)_0%,rgba(255,255,255,0)_100%)] lg:block"
+        />
 
         <!-- Heading -->
         <h2 class="mb-4 text-center text-4xl font-bold text-[#1a1a1a]">
           Perubahan Besar yang Kami Lakukan
         </h2>
-        <p class="mx-auto mb-12 max-w-[671px] text-center text-base text-[#4c4c4c]">
-          Tidak hanya beasiswa, namun kami juga memberikan dukungan pengembangan karier
+        <p
+          class="mx-auto mb-12 max-w-[671px] text-center text-base text-[#4c4c4c]"
+        >
+          Tidak hanya beasiswa, namun kami juga memberikan dukungan pengembangan
+          karier
         </p>
 
         <!-- Features -->
-        <div class="mb-16 grid grid-cols-2 gap-8 lg:flex lg:flex-wrap lg:justify-center lg:gap-16">
-          <div class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left">
-            <img class="h-[52px]" alt="Dukungan finansial" src="/assets/img/money-icon.png" />
+        <div
+          class="mb-16 grid grid-cols-2 gap-8 lg:flex lg:flex-wrap lg:justify-center lg:gap-16"
+        >
+          <div
+            class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left"
+          >
+            <img
+              class="h-[52px]"
+              alt="Dukungan finansial"
+              src="/assets/img/money-icon.png"
+            />
             <div class="text-lg font-semibold text-[#1a1a1a]">
               Dukungan <br />
               Finansial
             </div>
           </div>
 
-          <div class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left">
-            <img class="h-[52px]" alt="Softskill" src="/assets/img/softskill-icon.png" />
+          <div
+            class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left"
+          >
+            <img
+              class="h-[52px]"
+              alt="Softskill"
+              src="/assets/img/softskill-icon.png"
+            />
             <div class="text-lg font-semibold text-[#1a1a1a]">
               Pengembangan <br />
               Soft Skills
             </div>
           </div>
 
-          <div class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left">
-            <img class="h-[52px]" alt="Jaringan Profesional" src="/assets/img/jaringan-icon.png" />
+          <div
+            class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left"
+          >
+            <img
+              class="h-[52px]"
+              alt="Jaringan Profesional"
+              src="/assets/img/jaringan-icon.png"
+            />
             <div class="text-lg font-semibold text-[#1a1a1a]">
               Jaringan <br />
               Profesional
             </div>
           </div>
 
-          <div class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left">
-            <img class="h-[52px]" alt="Prestasi" src="/assets/img/prestasi-icon.png" />
+          <div
+            class="flex flex-col items-center gap-4 text-center lg:flex-row lg:text-left"
+          >
+            <img
+              class="h-[52px]"
+              alt="Prestasi"
+              src="/assets/img/prestasi-icon.png"
+            />
             <div class="text-lg font-semibold text-[#1a1a1a]">
               Apresiasi <br />
               Prestasi
@@ -111,27 +161,47 @@
         </div>
 
         <!-- Stats -->
-        <div class="border-primary mx-auto grid max-w-6xl grid-cols-1 rounded-3xl border py-8 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          class="border-primary mx-auto grid max-w-6xl grid-cols-1 rounded-3xl border py-8 md:grid-cols-2 lg:grid-cols-3"
+        >
           <!-- Statistic 1 -->
-          <div class="border-primary text-primary border-r-0 lg:border-r-1 sm:border-b-1 lg:border-b-0 bg-white px-6 text-center md:text-start lg:px-8 py-4 md:py-0">
-            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">15000+</div>
-            <p class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg">
+          <div
+            class="border-primary text-primary border-r-0 bg-white px-6 py-4 text-center sm:border-b-1 md:py-0 md:text-start lg:border-r-1 lg:border-b-0 lg:px-8"
+          >
+            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">
+              15000+
+            </div>
+            <p
+              class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg"
+            >
               Mahasiswa dapat melanjutkan kuliah dengan beasiswa
             </p>
           </div>
 
           <!-- Statistic 2 -->
-          <div class="border-primary text-primary border-r-0 lg:border-r-1 sm:border-b-1 lg:border-b-0 bg-white px-6 text-center md:text-start lg:px-8 py-4 md:py-0">
-            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">80%</div>
-            <p class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg">
+          <div
+            class="border-primary text-primary border-r-0 bg-white px-6 py-4 text-center sm:border-b-1 md:py-0 md:text-start lg:border-r-1 lg:border-b-0 lg:px-8"
+          >
+            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">
+              80%
+            </div>
+            <p
+              class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg"
+            >
               Awardee beasiswa memperoleh IPK > 3,5
             </p>
           </div>
 
           <!-- Statistic 3 -->
-          <div class="text-primary bg-white px-6 text-center md:text-start md:col-span-2 lg:col-span-1 lg:px-8 py-4 md:py-0">
-            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">80%</div>
-            <p class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg">
+          <div
+            class="text-primary bg-white px-6 py-4 text-center md:col-span-2 md:py-0 md:text-start lg:col-span-1 lg:px-8"
+          >
+            <div class="mb-3 text-3xl font-bold sm:text-4xl lg:text-6xl">
+              80%
+            </div>
+            <p
+              class="text-base leading-relaxed font-semibold opacity-80 lg:text-lg"
+            >
               Awardee berhasil mendapatkan pekerjaan tetap sebelum lulus
             </p>
           </div>
@@ -195,7 +265,7 @@
 
             <!-- Content -->
             <div
-              class="relative z-10 flex h-full items-center justify-between p-6 sm:p-8 lg:p-10 lg:flex-row flex-col"
+              class="relative z-10 flex h-full flex-col items-center justify-between p-6 sm:p-8 lg:flex-row lg:p-10"
             >
               <!-- Left side: Title -->
               <div class="max-w-[400px] flex-1 lg:max-w-[500px]">
@@ -296,4 +366,11 @@
 import { featuredScholarships } from '~/data/featuredScholarships.js'
 import { announcements } from '~/data/announcements.js'
 import { faqs } from '~/data/faqs.js'
+
+import TabsSwitch from '~/components/Tabs/Switch.vue'
+import CardsScholarship from '~/components/Cards/Scholarship.vue'
+import CardsSliding from '~/components/Cards/Sliding.vue'
+import CardsAnnouncement from '~/components/Cards/Announcement.vue'
+import CarouselCarousel from '~/components/Carousel/Carousel.vue'
+import AccordionFaq from '~/components/Accordion/Faq.vue'
 </script>
