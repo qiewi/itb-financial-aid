@@ -40,7 +40,9 @@
         </svg>
 
         <!-- Dot Pattern -->
-        <div class="absolute top-32 right-40 h-20 w-20 opacity-20">
+        <div
+          class="absolute top-32 right-40 hidden h-20 w-20 opacity-20 lg:block"
+        >
           <div class="grid grid-cols-4 gap-2">
             <div class="h-2 w-2 rounded-full bg-blue-400"></div>
             <div class="h-2 w-2 rounded-full bg-blue-400"></div>
@@ -184,7 +186,7 @@
           <!-- Media Sosial Section -->
           <div class="lg:col-span-3">
             <h6 class="text-primary mb-4 text-lg font-bold">Media Sosial</h6>
-            <div class="flex gap-2">
+            <div class="grid grid-cols-4 gap-2 sm:flex sm:gap-2">
               <a
                 href="https://instagram.com/itbofficial"
                 target="_blank"
